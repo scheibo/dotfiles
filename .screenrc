@@ -1,0 +1,59 @@
+# ~/.screenrc
+
+# shell bash                      # don't start login shells
+# crlf off                        # No Microsoft linebreaks
+# shelltitle ""                   # no title by default - set in PS1
+# defmonitor on                   # turn on monitoring
+# activity "<%n>"                 # let you know when stuff happens!
+# silencewait 15                  # notify when window goes silent
+# bell_msg "DING! (%n)"
+# vbell_msg "DING! (%n)"
+# vbell on
+# attrcolor b ".I" 								# enable bold
+
+# pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+startup_message off             # bypass GPL notice (we're aware)
+defscrollback 30000             # big scrollback
+autodetach on
+defutf8 on
+
+bell_msg '^G'
+altscreen on
+defbce on
+defflow off
+nonblock on
+msgwait 0
+vbell off
+
+caption always "%{= kb} %=%{w}%?%-Lw%?%{b}(%{W}%n*%f %t%?(%u)%?%{b})%{w}%?%+Lw%?%= %{b} %{kb}"
+
+# copy screen clipboard to mac clipboard
+bind b eval "writebuf" "exec sh -c 'pbcopy < /tmp/screen-exchange'"
+
+screen -t server 1 bash
+screen -t git-sh 2 bash
+screen -t console 3 bash
+screen -t term 4 bash
+select 2
+
+# keybinding
+
+#escape
+
+bind ^k
+bind ^\
+bind W
+bind k
+bind .
+bind \\
+bind ^h
+bind h
+
+bind Q quit
+bind W windowlist
+bind K kill
+bind } history
+
+bindkey "\033[5D" prev  # change window with ctrl-left
+bindkey "\033[5C" next  # change window with ctrl-right
