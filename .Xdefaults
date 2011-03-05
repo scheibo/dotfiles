@@ -1,0 +1,91 @@
+!###########################
+!# Xdefaults configuration #
+!###########################
+
+!--[Urxvt Options]--!
+
+!-- Title
+
+URxvt.title:             urxvt
+URxvt.termName:          rxvt-unicode
+URxvt.cursorBlink:       true
+URxvt.urgentOnBell:      true
+
+!-- General Options
+
+URxvt.background:        black
+URxvt.foreground:        white
+URxvt.cursorColor:       white
+URxvt.underlineColor:    white
+URxvt.imLocale:          en_US.UTF-8
+URxvt.saveLines:         512
+URxvt.borderless:        true
+URxvt.xftAntialias:      true
+URxvt.jumpScroll:        true
+URxvt.internalBorder:    0
+URxvt.cursorBlink:       false
+URxvt.buffered:          true
+URxvt.scrollBar:         false
+URxvt.visualBell:        false
+
+!-- Font
+
+Xft.dpi:                 96
+Xft.antialias:           1
+Xft.hinting:             1
+Xft.hintstyle:           hintfull
+Xft.rgba:                rgb
+URxvt.font:              xft:Terminus-10
+
+!--[Colours]--!
+
+!-- Tango color scheme
+
+! Black
+!Urxvt*color8:  #888a85
+URxvt*color0:   #2e3436
+URxvt*color8:   #555753
+
+! Red
+!Urxvt*color1:  #a40000
+URxvt*color1:   #cc0000
+URxvt*color9:   #ef2929
+
+! Green
+!Urxvt*color2:  #4e9a06
+URxvt*color2:   #4e9a06
+URxvt*color10:  #8ae234
+
+! Yellow
+!Urxvt*color3:  #edd400
+URxvt*color3:   #c4a000
+URxvt*color11:  #fce94f
+
+! Blue
+!Urxvt*color4:  #204a87
+URxvt*color4:   #3465a4
+URxvt*color12:  #729fcf
+
+! Purple
+!Urxvt*color5:  #5c3566
+URxvt*color5:   #75507b
+URxvt*color13:  #ad7fa8
+
+! Cyan
+URxvt*color6:   #0b939b
+URxvt*color14:  #00f5e9
+
+! White
+!Urxvt*color7:  #babdb6
+URxvt*color7:   #d3d7cf
+URxvt*color15:  #eeeeec
+
+! Brown
+!Urxvt*color6:  #8f5902
+!Urxvt*color6:  #c17d11
+!Urxvt*color14: #e9b96e
+
+! Orange
+!Urxvt*color6:  #ce5c00
+!Urxvt*color6:  #f57900
+!Urxvt*color14: #fcaf3e
