@@ -3,10 +3,14 @@ ARGV.concat ["--readline", "--prompt-mode", "simple"]
 
 require 'irb/completion'
 require 'irb/ext/save-history'
+require 'pp'
+require 'hirb'
+require 'interactive_editor'
+require 'yaml'
+
 IRB.conf[:SAVE_HISTORY] = 500
 IRB.conf[:HISTORY_FILE] = File.expand_path('~/.irb_history')
-
-require 'pp'
+IRB.conf[:AUTO_INDENT]=true
 
 # http://ozmm.org/posts/time_in_irb.html
 def time(times = 1)
@@ -35,22 +39,8 @@ def IRB.reload
   load __FILE__
 end
 
-###
-
-script_console_running = ENV.include?('RAILS_ENV') && IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers')
-rails_running = ENV.include?('RAILS_ENV') && !(IRB.conf[:LOAD_MODULES] && IRB.conf[:LOAD_MODULES].include?('console_with_helpers'))
-irb_standalone_running = !script_console_running && !rails_running
-
-if script_console_running
-  require 'logger'
-  Object.const_set(:RAILS_DEFAULT_LOGGER, Logger.new(STDOUT))
+def r
+  reload!
 end
 
-require 'rubygems'
-require 'hirb'
-require 'interactive_editor'
-require 'yaml'
-IRB.conf[:AUTO_INDENT]=true
-
 Hirb::View.enable
-

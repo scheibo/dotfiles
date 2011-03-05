@@ -1,3 +1,5 @@
 [ui]
 username = scheibo <kjs@scheibo.com>
 ssh = ssh -C
+[extensions]
+fetch =

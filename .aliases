@@ -1,11 +1,7 @@
-# ----------------------------------------------------------------------
-# ALIASES / FUNCTIONS
-# ----------------------------------------------------------------------
+#!/bin/bash
 
-# we always pass these to ls(1)
 LS_COMMON="-hBG"
 
-# if the dircolors utility is available, set that up to
 dircolors="$(type -P gdircolors dircolors | head -1)"
 test -n "$dircolors" && {
     COLORS=/etc/DIR_COLORS
@@ -16,32 +12,25 @@ test -n "$dircolors" && {
 }
 unset dircolors
 
-# setup the main ls alias if we've established common args
 test -n "$LS_COMMON" &&
 alias ls="command ls $LS_COMMON"
 
-# --------------------------------------------------------------------
-# MISC COMMANDS
-# --------------------------------------------------------------------
-
-# push SSH public key to another box
 push_ssh_cert() {
     local _host
-    test -f ~/.ssh/id_dsa.pub || ssh-keygen -t dsa
+    test -f ~/.ssh/id_rsa.pub || ssh-keygen -t rsa
     for _host in "$@";
     do
         echo $_host
-        ssh $_host 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_dsa.pub
+        ssh $_host 'cat >> ~/.ssh/authorized_keys' < ~/.ssh/id_rsa.pub
     done
 }
 
-ff() { find . -name $@ -print; }
 prman() { man -t $1 | psnup -2 | lpr; }
 
 repeat() {
     local i max
     max=$1; shift;
-    for ((i=1; i <= max ; i++)); do  # --> C-like syntax
+    for ((i=1; i <= max ; i++)); do
         eval "$@";
     done
 }
@@ -70,52 +59,11 @@ extract() {
 encrypt() { gpg -ao cipher.asc -esr $2 $1; }
 decrypt() { gpg -o plain.txt -d $1; }
 
-# --------------------------------------------------------------------
-# PATH MANIPULATION FUNCTIONS
-# --------------------------------------------------------------------
+cdir() { mkdir $1 && cd $1; }
 
-# Usage: pls [<var>]
-# List path entries of PATH or environment variable <var>.
-pls () { eval echo \$${1:-PATH} |tr : '\n'; }
-
-# Usage: pshift [-n <num>] [<var>]
-# Shift <num> entries off the front of PATH or environment var <var>.
-# with the <var> option. Useful: pshift $(pwd)
-pshift () {
-    local n=1
-    [ "$1" = "-n" ] && { n=$(( $2 + 1 )); shift 2; }
-    eval "${1:-PATH}='$(pls |tail -n +$n |tr '\n' :)'"
-}
-
-# Usage: ppop [-n <num>] [<var>]
-# Pop <num> entries off the end of PATH or environment variable <var>.
-ppop () {
-    local n=1 i=0
-    [ "$1" = "-n" ] && { n=$2; shift 2; }
-    while [ $i -lt $n ]
-    do eval "${1:-PATH}='\${${1:-PATH}%:*}'"
-       i=$(( i + 1 ))
-    done
-}
-
-# Usage: prm <path> [<var>]
-# Remove <path> from PATH or environment variable <var>.
-prm () { eval "${2:-PATH}='$(pls $2 |grep -v "^$1\$" |tr '\n' :)'"; }
-
-# Usage: punshift <path> [<var>]
-# Shift <path> onto the beginning of PATH or environment variable <var>.
-punshift () { eval "${2:-PATH}='$1:$(eval echo \$${2:-PATH})'"; }
-
-# Usage: ppush <path> [<var>]
-ppush () { eval "${2:-PATH}='$(eval echo \$${2:-PATH})':$1"; }
-
-# Usage: puniq [<path>]
-# Remove duplicate entries from a PATH style value while retaining
-# the original order. Use PATH if no <path> is given.
-#
-# Example:
-#   $ puniq /usr/bin:/usr/local/bin:/usr/bin
-#   /usr/bin:/usr/local/bin
+goto() { [[ -d "$1" ]] && cd "$1" || cd "$(dirname "$1")"; }
+cpf() { cp "$@" && goto "$_"; }
+mvf() { mv "$@" && goto "$_"; }
 
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
@@ -129,7 +77,6 @@ if [ -x /bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
-# some more ls aliases
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
@@ -138,17 +85,16 @@ alias lla='ls -l -A'
 alias lsl='ls -l'
 alias lsa='ls -A'
 
-# program shortcut aliases
 alias sd='sudo shutdown -h now'
-alias csgcc='gcc -std=c99 -O -Wall'
-alias csrun='valgrind --leak-check=yes ./a.out'
+alias gcc99='gcc -std=c99 -O -Wall'
+alias crun='valgrind --leak-check=yes ./a.out'
 alias status='pwd && ls'
 alias s='clear && status'
 
-# pacman
-alias pacman='sudo pacman'
+alias pinstall='sudo pacman -S'
+alias puninstall='sudo pacman -R'
+alias psearch='pacman -Ss'
 
-# typos
 alias xs='cd'
 alias vf='cd'
 alias cd..='cd ..'
@@ -159,15 +105,15 @@ alias kk='ll'
 alias ks='ls'
 alias LS='ls'
 alias sl='ls'
+alias cs='cd'
 
-# directory movement
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
+alias dc='cd -'
 
-# general aliases
 alias cp='cp -i'
 alias mv='mv -i'
 alias mkdir='mkdir -p'
@@ -180,7 +126,6 @@ alias clean='rm -rf compiled \#* *~ .*~ *.bak .*.bak *.tmp .*.tmp core a.out *.g
 alias wipe='rm -rf compiled \#* *~ .*~ *.bak .*.bak *.o *.d *.tmp .*.tmp core *.out* *.gch *.hi'
 alias texclean='rm -f *.toc *.aux *.log *.cp *.fn *.tp *.vr *.pg *.ky'
 alias h='history'
-#alias j='jobs -l'
 alias pu='pushd'
 alias po='popd'
 alias tgz='tar -cvvzf'
@@ -193,17 +138,12 @@ alias c='clear'
 alias hc='history -c'
 alias hcx='hc;x'
 alias psa='ps aux'
+alias du1='du -h --max-depth=1'
+alias fn='find . -name'
 
 alias irb='irb --prompt simple'
-
-alias install='sudo pacman -S'
-alias uninstall='sudo pacman -R'
-alias search='pacman -Ss'
-
-
 alias vi='vim'
 alias rails2='rails _2.3.8_'
 
-# disk usage with human sizes and minimal depth
-alias du1='du -h --max-depth=1'
-alias fn='find . -name'
+alias wget='wget --no-check-certificate'
+alias sbashrc='source ~/.bashrc'

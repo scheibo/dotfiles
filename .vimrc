@@ -2,26 +2,21 @@
 " General
 " ---------------------------------------------------------------------------
 
-set nocompatible                      " essential
-set history=100                       " command line history length
-" set cf                                " error files / jumping
-" set ffs=unix,dos,mac                  " support these files
-" set isk+=_,$,@,%,#,-                  " none word dividers
-" set viminfo='1000,f1,:100,@100,/20
-" set modeline                          " make sure modeline support is enabled
-set autoread                          " reload files (no local changes only)
-set tabpagemax=50                     " open 50 tabs max
-
-
-
+set nocompatible
+set history=100
+set cf               " error files / jumping
+set ffs=unix,dos,mac " support these files
+set isk+=_,$,@,%,#,- " none word dividers
+set viminfo='1000,f1,:100,@100,/20
+set modeline         " make sure modeline support is enabled
+set autoread
+set tabpagemax=50
 set hidden
 set mouse=a
 set backspace=indent,eol,start
 set autowrite
 set completeopt=longest
-
 set laststatus=2
-
 set nomousehide
 set wrap
 set shortmess+=r
@@ -29,9 +24,16 @@ set novisualbell
 set splitright
 set splitbelow
 set showmode
-
+set lcs=tab:»·   " show tabs
+set lcs+=trail:· " show trailing spaces
 
 set notitle
+
+" set the window title in screen
+if $STY != ""
+    set t_ts=k
+    set t_fs=\
+endif
 
 " ---------------------------------------------------------------------------
 " Colors / Theme
@@ -68,14 +70,13 @@ set directory=~/.vim/swap,~/tmp,.      " keep swp files under ~/.vim/swap
 " ----------------------------------------------------------------------------
 
 set ruler                  " show the cursor position all the time
-" set noshowcmd              " don't display incomplete commands
+set noshowcmd              " don't display incomplete commands
 set nolazyredraw           " turn off lazy redraw
-" set number                 " line numbers
 set wildmenu               " turn on wild menu
 set wildmode=list:longest,full
 
 set whichwrap+=<,>,h,l,[,] " backspace and cursor keys wrap to
-" set shortmess=filtIoOA     " shorten messages
+set shortmess=filtIoOA     " shorten messages
 set report=0               " tell us about changes
 set nostartofline          " don't jump to the start of line when scrolling
 
@@ -83,31 +84,31 @@ set nostartofline          " don't jump to the start of line when scrolling
 " Visual Cues
 " ----------------------------------------------------------------------------
 
-set showmatch              " brackets/braces that is
-set mat=5                  " duration to show matching brace (1/10 sec)
-set incsearch              " do incremental searching
-set laststatus=2           " always show the status line
-set ignorecase             " ignore case when searching
-set hlsearch             	 " highlight searches
-set visualbell             " shut the fuck up
-" set vb t_vb=
+set showmatch
+set mat=5
+set incsearch
+set laststatus=2
+set ignorecase
+set hlsearch
+set visualbell
+set vb t_vb=
 
 " ----------------------------------------------------------------------------
 " Text Formatting
 " ----------------------------------------------------------------------------
 
-set autoindent             " automatic indent new lines
-set smartindent            " be smart about it
-set nowrap                 " do not wrap lines
-set softtabstop=2          " yep, two
-set shiftwidth=2           " ..
+set autoindent
+set smartindent
+set nowrap
+set softtabstop=2
+set shiftwidth=2
 set tabstop=4
-set expandtab              " expand tabs to spaces
-" set nosmarttab             " fuck tabs\
+set expandtab
+set nosmarttab
 set smarttab
 set formatoptions+=n       " support for numbered/bullet lists
 set textwidth=80           " wrap at 80 chars by default
-set virtualedit=block      " allow virtual edit in visual block ..
+set virtualedit=block
 
 " ----------------------------------------------------------------------------
 "  Mappings
@@ -115,11 +116,6 @@ set virtualedit=block      " allow virtual edit in visual block ..
 
 " remap <LEADER> to ',' (instead of '\')
 let mapleader = ","
-
-" quickfix mappings
-" map <F7>  :cn<CR>
-" map <S-F7> :cp<CR>
-" map <A-F7> :copen<CR>
 
 " emacs movement keybindings in insert mode
 imap <C-a> <C-o>0
@@ -161,24 +157,29 @@ nnoremap <C-l> <C-w>l
 " save the current file as root and reload
 cmap w!! w !sudo tee % >/dev/null<CR>:e!<CR><CR>
 
+" toggle various modes via the same interface
 function MapToggle(key, opt)
     let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
     exec 'nnoremap '.a:key.' '.cmd
     exec 'inoremap '.a:key." \<C-O>".cmd
 endfunction
-
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
+" F1 is NERDTree
+" F2 is CTags
 MapToggle <F3> number
 MapToggle <F4> spell
 MapToggle <F5> list
 MapToggle <F6> hlsearch
 MapToggle <F7> paste
 MapToggle <F8> wrap
+" F9 is strip white space
 
 "swap functionality
 nnoremap ' `
 nnoremap ` '
+
+vnoremap <C-W> :Align = <CR>
 
 " ----------------------------------------------------------------------------
 "  Auto Commands
@@ -193,7 +194,6 @@ autocmd FileType javascript setlocal nocindent
 
 " strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
-
 
 " ----------------------------------------------------------------------------
 "  PATH on MacOS X
@@ -218,9 +218,9 @@ let g:is_bash = 1
 "  Misc mappings
 " ---------------------------------------------------------------------------
 
-" map ,f :tabnew <cfile><CR>
-" map ,d :e %:h/<CR>
-" map ,dt :tabnew %:h/<CR>
+map ,f :tabnew <cfile><CR>
+map ,d :e %:h/<CR>
+map ,dt :tabnew %:h/<CR>
 
 " ---------------------------------------------------------------------------
 "  Open URL on current line in browser
@@ -245,10 +245,26 @@ map ,s :call StripWhitespace ()<CR>
 
 :nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
+
+" ---------------------------------------------------------------------------
+" astrails bonuses
+" ---------------------------------------------------------------------------
+
+"make Y consistent with C and D
+nnoremap Y y$
+
+" Ctrl-E to switch between 2 last buffers
+nmap <C-E> :b#<CR>
+
+" ,e to fast finding files. just type beginning of a name and hit TAB
+nmap <leader>e :e **/
+
+" Ctrl-N to disable search match highlight
+nmap <silent> <C-N> :silent noh<CR>
+
 " ---------------------------------------------------------------------------
 " File Types
 " ---------------------------------------------------------------------------
-
 
 au BufRead,BufNewFile *.god        set ft=ruby
 au BufRead,BufNewFile *.svg        set ft=svg
@@ -261,46 +277,38 @@ au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
 au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
 
+" ---------------------------------------------------------------------------
+" File Type Syntax Highlighting
+" ---------------------------------------------------------------------------
 
-
-
-
-
-" set the window title in screen
-if $STY != ""
-    set t_ts=k
-    set t_fs=\
-endif
-
-set lcs=tab:»·   "show tabs
-set lcs+=trail:· "show trailing spaces
-
-
-
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
-"let NERDTreeWinPos="right"
-let NERDTreeWinSize=32
-nnoremap <silent> <F1> :NERDTreeToggle<CR>
-nnoremap <silent> <F2> :TlistToggle<CR>
-
-vnoremap <C-W> :Align = <CR>
-
-" filetype specific
 let is_mzscheme=1
 let python_highlight_all=1
-let vimclojure#NailgunClient="/opt/vimclojure/ng"
-let clj_want_gorilla = 1
-
 let hs_highlight_delimiters = 1
 let hs_highlight_boolean = 1
 let hs_highlight_types = 1
 let hs_highlight_more_types = 1
 let hs_highlight_debug = 1
 
+" ---------------------------------------------------------------------------
+" Plugins
+" ---------------------------------------------------------------------------
 
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_Use_Right_Window = 1
+"let NERDTreeWinPos=right
+let NERDTreeWinSize=32
 
-" WINDOWS MODE
+nnoremap <silent> <F1> :NERDTreeToggle<CR>
+nnoremap <silent> <F2> :TlistToggle<CR>
+
+" nerdcommenter
+" ,/ to invert comment on the current line/selection
+nmap <leader>/ :call NERDComment(0, "invert")<cr>
+vmap <leader>/ :call NERDComment(0, "invert")<cr>
+
+" ---------------------------------------------------------------------------
+" Windows Mode
+" ---------------------------------------------------------------------------
 
 " Use CTRL-Q to do what CTRL-V used to do
 noremap <C-Q>		<C-V>

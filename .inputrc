@@ -22,6 +22,8 @@ set print-completions-horizontally off
 
 set editing-mode emacs
 
+set echo-control-characters off
+
 # reload file
 "\C-x\C-r": re-read-init-file
 
