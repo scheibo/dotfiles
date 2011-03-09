@@ -3,3 +3,8 @@ username = scheibo <kjs@scheibo.com>
 ssh = ssh -C
 [extensions]
 fetch =
+color =
+convert =
+highlight =
+mq =
+eol =
