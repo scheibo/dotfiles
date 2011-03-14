@@ -221,6 +221,7 @@ let g:is_bash = 1
 map ,f :tabnew <cfile><CR>
 map ,d :e %:h/<CR>
 map ,dt :tabnew %:h/<CR>
+map <C-h> :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR>
 
 " ---------------------------------------------------------------------------
 "  Open URL on current line in browser
@@ -244,7 +245,6 @@ endfunction
 map ,s :call StripWhitespace ()<CR>
 
 :nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-
 
 " ---------------------------------------------------------------------------
 " astrails bonuses
