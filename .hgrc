@@ -8,3 +8,5 @@ convert =
 highlight =
 mq =
 eol =
+hggit =
+hgext.bookmarks =
