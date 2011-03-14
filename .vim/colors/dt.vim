@@ -24,13 +24,13 @@ hi Cursor         ctermbg=0                 cterm=none
 hi CursorLine     ctermbg=0                 cterm=none
 hi CursorColumn   ctermbg=0                 cterm=none
 hi SignColumn     ctermbg=232  ctermfg=15   cterm=none
-hi Directory      ctermbg=232  ctermfg=12   cterm=none 
+hi Directory      ctermbg=232  ctermfg=12   cterm=none
 hi Title          ctermbg=232  ctermfg=15   cterm=bold
 
 " *** Syntax Colors *** "
 hi Comment        ctermbg=232  ctermfg=8    cterm=none
 hi Constant       ctermbg=232  ctermfg=1    cterm=none
-hi Delimiter      ctermbg=232  ctermfg=0    cterm=none
+hi Delimiter      ctermbg=232  ctermfg=238  cterm=none
 hi Error          ctermbg=1    ctermfg=15   cterm=none
 hi Exception      ctermbg=232  ctermfg=208  cterm=none
 hi Function       ctermbg=232  ctermfg=6    cterm=none
@@ -47,8 +47,8 @@ hi MatchParen     ctermbg=0    ctermfg=7    cterm=none
 hi Operator       ctermbg=232  ctermfg=10   cterm=none
 hi Type           ctermbg=232  ctermfg=4    cterm=none
 
-hi link Character Constant     
-hi link Conditional Statement 
+hi link Character Constant
+hi link Conditional Statement
 hi link Float Number
 hi link Number Constant
 hi link Debug Exception
@@ -73,14 +73,14 @@ hi! link MoreMsg Question
 hi! link ModeMsg Question
 
 " *** Visual Mode *** "
-hi Visual         ctermbg=0    ctermfg=7    cterm=none 
+hi Visual         ctermbg=0    ctermfg=7    cterm=none
 hi VisualNOS      ctermbg=0    ctermfg=7    cterm=none
 
 " *** Search *** "
-hi Search         ctermbg=11  ctermfg=0     cterm=none 
+hi Search         ctermbg=11  ctermfg=0     cterm=none
 hi IncSearch      ctermbg=11  ctermfg=0     cterm=none
 
-" ********* Language Specific ********* " 
+" ********* Language Specific ********* "
 
 " *** Scheme *** "
 
@@ -89,9 +89,5 @@ hi! link schemeExtSyntax Type
 
 " *** Clojure *** "
 
-hi clojureDelimiter ctermfg=238
 hi clojureKeyword   ctermfg=10
 hi link clojureFunc PreProc
-
-" *** Haskell *** "
-hi hsDelimiter      ctermfg=238
