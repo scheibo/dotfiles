@@ -221,7 +221,9 @@ let g:is_bash = 1
 map ,f :tabnew <cfile><CR>
 map ,d :e %:h/<CR>
 map ,dt :tabnew %:h/<CR>
-map <C-h> :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR>
+map <C-h> :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
+
+"map <f9> :w<CR>:!python %<CR>
 
 " ---------------------------------------------------------------------------
 "  Open URL on current line in browser
@@ -266,6 +268,7 @@ nmap <silent> <C-N> :silent noh<CR>
 " File Types
 " ---------------------------------------------------------------------------
 
+au BufRead,BufNewFile *.rkt        set ft=scheme
 au BufRead,BufNewFile *.god        set ft=ruby
 au BufRead,BufNewFile *.svg        set ft=svg
 au BufRead,BufNewFile *.haml       set ft=haml
