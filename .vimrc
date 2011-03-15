@@ -148,6 +148,9 @@ nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
+" fix the accident of typing Q instead of q!
+cnoremap Q q
+
 " quicker window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -180,6 +183,9 @@ nnoremap ' `
 nnoremap ` '
 
 vnoremap <C-W> :Align = <CR>
+
+vmap > >gv
+vmap < <gv
 
 " ----------------------------------------------------------------------------
 "  Auto Commands
@@ -221,7 +227,7 @@ let g:is_bash = 1
 map ,f :tabnew <cfile><CR>
 map ,d :e %:h/<CR>
 map ,dt :tabnew %:h/<CR>
-map <C-h> :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
+map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
 
 "map <f9> :w<CR>:!python %<CR>
 
@@ -246,7 +252,7 @@ function! StripWhitespace ()
 endfunction
 map ,s :call StripWhitespace ()<CR>
 
-:nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 " ---------------------------------------------------------------------------
 " astrails bonuses
@@ -255,8 +261,8 @@ map ,s :call StripWhitespace ()<CR>
 "make Y consistent with C and D
 nnoremap Y y$
 
-" Ctrl-E to switch between 2 last buffers
-nmap <C-E> :b#<CR>
+" <s>Ctrl-E</s><b>,p</b> to switch between 2 last buffers
+nmap <leader>p :b#<CR>
 
 " ,e to fast finding files. just type beginning of a name and hit TAB
 nmap <leader>e :e **/
@@ -309,12 +315,26 @@ nnoremap <silent> <F2> :TlistToggle<CR>
 nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
+
+" ---------------------------------------------------------------------------
+" Textmate mode
+" ---------------------------------------------------------------------------
+
+" we can't map <C-[> to the reverse since its used for ESC
+noremap <leader>] <C-]>
+noremap <leader>t <C-T>
+map <C-]> >
+
+" can't map <C-/>, however, '/' sends an '_' so we can be sneaky
+nmap <C-_> :call NERDComment(0, "invert")<cr>
+vmap <C-_> :call NERDComment(0, "invert")<cr>
+
 " ---------------------------------------------------------------------------
 " Windows Mode
 " ---------------------------------------------------------------------------
 
 " Use CTRL-Q to do what CTRL-V used to do
-noremap <C-Q>		<C-V>
+noremap <C-Q> <C-V>
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
 " CTRL-X and SHIFT-Del are Cut
@@ -332,10 +352,7 @@ inoremap <C-Z> <C-O>u
 " CTRL-Y is Redo (although not repeat); not in cmdline though
 noremap <C-Y> <C-R>
 inoremap <C-Y> <C-O><C-R>
-" CTRL-A is Select all
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-C>gggH<C-O>G
-onoremap <C-A> <C-C>gggH<C-O>G
-snoremap <C-A> <C-C>gggH<C-O>G
-xnoremap <C-A> <C-C>ggVG
+" Use CTRL-S for saving, also in Insert mode
+noremap <C-S>  :update<CR>
+vnoremap <C-S> <C-C>:update<CR>
+imap <C-S> <ESC><C-S>
