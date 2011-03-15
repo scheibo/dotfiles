@@ -201,6 +201,22 @@ autocmd FileType javascript setlocal nocindent
 " strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
+au FileType scheme map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
+
+function ModeChange()
+  if getline(1) =~ "^#!.*/bin/*"
+      silent !chmod u+x <afile>
+  endif
+endfunction
+au BufWritePost * call ModeChange()
+
+
+"au filetype c map <F5> <c-\><c-n>:!gcc *.c -o %:r<cr>\rr<cr>
+"au filetype python map <F5> :w<CR>:!echo -e '---Python---\n'<CR>:!python %<CR>:!rm *.pyc<CR>:!rm *py~<CR>
+"imap <F5> <Esc><F5>
+"vmap <F5> <Esc><F5>
+"noremap <F5> <Esc><F5>
+
 " ----------------------------------------------------------------------------
 "  PATH on MacOS X
 " ----------------------------------------------------------------------------
@@ -227,7 +243,6 @@ let g:is_bash = 1
 map ,f :tabnew <cfile><CR>
 map ,d :e %:h/<CR>
 map ,dt :tabnew %:h/<CR>
-map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
 
 "map <f9> :w<CR>:!python %<CR>
 
