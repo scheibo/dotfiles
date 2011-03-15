@@ -2,7 +2,7 @@
 # ~/.xinitrc
 
 # Wallpaper
-feh --bg-scale ~/pics/background.jpg &
+feh --bg-scale ~/pics/background.png &
 
 # Start programs
 urxvtd -q -o -f &
