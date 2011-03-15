@@ -241,7 +241,7 @@ function! Browser ()
     let line = escape (line, "#?&;|%")
     exec ':silent !open ' . "\"" . line . "\""
 endfunction
-map ,w :call Browser ()<CR>
+map <leader>w :call Browser ()<CR>
 
 " ---------------------------------------------------------------------------
 "  Strip all trailing whitespace in file
@@ -250,7 +250,7 @@ map ,w :call Browser ()<CR>
 function! StripWhitespace ()
     exec ':%s/ \+$//gc'
 endfunction
-map ,s :call StripWhitespace ()<CR>
+map <leader>s :call StripWhitespace ()<CR>
 
 nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
@@ -261,8 +261,8 @@ nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 "make Y consistent with C and D
 nnoremap Y y$
 
-" <s>Ctrl-E</s><b>,p</b> to switch between 2 last buffers
-nmap <leader>p :b#<CR>
+" <s>Ctrl-E</s><b>,b</b> to switch between 2 last buffers
+nmap <leader>b :b#<CR>
 
 " ,e to fast finding files. just type beginning of a name and hit TAB
 nmap <leader>e :e **/
@@ -356,3 +356,21 @@ inoremap <C-Y> <C-O><C-R>
 noremap <C-S>  :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 imap <C-S> <ESC><C-S>
+
+" ---------------------------------------------------------------------------
+" X Clipboard
+" ---------------------------------------------------------------------------
+
+" Copy to X CLIPBOARD
+map <leader>c :w !xsel -i -b<CR><CR>
+"map <leader>cp :w !xsel -i -p<CR>
+" Paste from X CLIPBOARD
+"map <leader>p :r !xsel -b<CR>
+"map <leader>pp :r!xsel -p<CR>
+
+function! XClipboardPaste ()
+    exec ':set paste'
+    exec ':r !xsel -b'
+    exec ':set nopaste'
+endfunction
+map <leader>p :call XClipboardPaste ()<CR>
