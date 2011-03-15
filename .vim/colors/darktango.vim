@@ -53,6 +53,18 @@ hi link Float Number
 hi link Number Constant
 hi link Debug Exception
 
+" *** Diff *** "
+hi DiffAdd        ctermbg=10    ctermfg=0
+hi DiffChange     ctermbg=3    ctermfg=0
+hi DiffDelete     ctermbg=1    ctermfg=0
+hi DiffText       ctermbg=0    ctermfg=15
+
+" *** Spelling *** "
+hi SpellBad       ctermbg=9    ctermfg=15
+hi SpellCap       ctermbg=6    ctermfg=15
+hi SpellRare      ctermbg=10   ctermfg=0
+hi SpellLocal     ctermbg=13   ctermfg=15
+
 " *** Window Elements *** "
 hi LineNr                        guifg=#A40000  ctermbg=232  ctermfg=88   cterm=none
 hi StatusLine     guibg=#2E3436  guifg=#EEEEEC  ctermbg=0    ctermfg=15   cterm=none
