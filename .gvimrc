@@ -16,6 +16,7 @@ set showtabline=2
 set clipboard+=unnamed
 
 highlight NonText guifg=#2B2B2B
+highlight MatchParen guibg=#454545
 
 " No ruby support, Cmd-T not an option, lets use PeepOpen
 let g:peepopen_quit=1
