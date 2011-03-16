@@ -43,15 +43,12 @@ syntax on
 filetype plugin indent on
 
 set t_Co=256
-colorscheme darktango
 
-" ---------------------------------------------------------------------------
-"  Highlight
-" ---------------------------------------------------------------------------
-
-" highlight Comment         ctermfg=DarkGrey guifg=#444444
-" highlight StatusLineNC    ctermfg=Black ctermbg=DarkGrey cterm=bold
-" highlight StatusLine      ctermbg=Black ctermfg=LightGrey
+if has("gui_running")
+  colorscheme railscasts
+else
+  colorscheme darktango
+endif
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -182,7 +179,7 @@ MapToggle <F8> wrap
 nnoremap ' `
 nnoremap ` '
 
-vnoremap <C-W> :Align = <CR>
+vnoremap <C-w> :Align = <CR>
 
 vmap > >gv
 vmap < <gv
@@ -210,24 +207,7 @@ function ModeChange()
 endfunction
 au BufWritePost * call ModeChange()
 
-
-"au filetype c map <F5> <c-\><c-n>:!gcc *.c -o %:r<cr>\rr<cr>
-"au filetype python map <F5> :w<CR>:!echo -e '---Python---\n'<CR>:!python %<CR>:!rm *.pyc<CR>:!rm *py~<CR>
-"imap <F5> <Esc><F5>
-"vmap <F5> <Esc><F5>
-"noremap <F5> <Esc><F5>
-
-" ----------------------------------------------------------------------------
-"  PATH on MacOS X
-" ----------------------------------------------------------------------------
-
-if system('uname') =~ 'Darwin'
-  let $PATH = $HOME .
-    \ '/usr/local/bin:/usr/local/sbin:' .
-    \ '/usr/pkg/bin:' .
-    \ '/opt/local/bin:/opt/local/sbin:' .
-    \ $PATH
-endif
+au FileType make  set noexpandtab
 
 " ---------------------------------------------------------------------------
 "  sh config
@@ -240,11 +220,9 @@ let g:is_bash = 1
 "  Misc mappings
 " ---------------------------------------------------------------------------
 
-map ,f :tabnew <cfile><CR>
-map ,d :e %:h/<CR>
-map ,dt :tabnew %:h/<CR>
-
-"map <f9> :w<CR>:!python %<CR>
+map <leader>f :tabnew <cfile><CR>
+map <leader>d :e %:h/<CR>
+map <leader>dt :tabnew %:h/<CR>
 
 " ---------------------------------------------------------------------------
 "  Open URL on current line in browser
@@ -267,7 +245,7 @@ function! StripWhitespace ()
 endfunction
 map <leader>s :call StripWhitespace ()<CR>
 
-nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F9> :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<CR>
 
 " ---------------------------------------------------------------------------
 " astrails bonuses
@@ -283,11 +261,27 @@ nmap <leader>b :b#<CR>
 nmap <leader>e :e **/
 
 " Ctrl-N to disable search match highlight
-nmap <silent> <C-N> :silent noh<CR>
+nmap <silent> <C-n> :silent noh<CR>
 
 " ---------------------------------------------------------------------------
 " File Types
 " ---------------------------------------------------------------------------
+
+function s:setupWrapping()
+  set wrap
+  set wm=2
+  set textwidth=72
+endfunction
+
+function s:setupMarkup()
+  call s:setupWrapping()
+  map <buffer> <leader>pr :Mm <CR>
+endfunction
+
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
+au BufRead,BufNewFile *.txt call s:setupWrapping()
 
 au BufRead,BufNewFile *.rkt        set ft=scheme
 au BufRead,BufNewFile *.god        set ft=ruby
@@ -300,6 +294,11 @@ au BufRead,BufNewFile *.ronn       set ft=mkd tw=80 ts=2 sw=2 expandtab
 au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
 au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
+
+" make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+au FileType python    set tw=79  ts=4
+
+"au FileType ruby let b:delimitMate_autoclose = 0
 
 " ---------------------------------------------------------------------------
 " File Type Syntax Highlighting
@@ -317,75 +316,106 @@ let hs_highlight_debug = 1
 " Plugins
 " ---------------------------------------------------------------------------
 
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
-"let NERDTreeWinPos=right
-let NERDTreeWinSize=32
-
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :TlistToggle<CR>
+
+let NERDTreeWinSize=32
+let Tlist_Exit_OnlyWindow = 1
 
 " nerdcommenter
 " ,/ to invert comment on the current line/selection
 nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
+" Enable syntastic syntax checking
+let g:syntastic_enable_signs=1
+let g:syntastic_quiet_warnings=1
+
+" gist-vim defaults
+if has("mac")
+  let g:gist_clip_command = 'pbcopy'
+elseif has("unix")
+  let g:gist_clip_command = 'xclip -selection clipboard'
+endif
+let g:gist_detect_filetype = 1
+let g:gist_open_browser_after_post = 1
+
+" Turn off jslint errors by default
+let g:JSLintHighlightErrorLine = 0
+
+" MacVIM shift+arrow-keys behavior (required in .vimrc)
+if has("gui_macvim")
+  let macvim_hig_shift_movement = 1
+endif
+
+" % to bounce from do to end etc.
+runtime! macros/matchit.vim
 
 " ---------------------------------------------------------------------------
-" Textmate mode
-" ---------------------------------------------------------------------------
-
-" we can't map <C-[> to the reverse since its used for ESC
-noremap <leader>] <C-]>
-noremap <leader>t <C-T>
-map <C-]> >
-
-" can't map <C-/>, however, '/' sends an '_' so we can be sneaky
-nmap <C-_> :call NERDComment(0, "invert")<cr>
-vmap <C-_> :call NERDComment(0, "invert")<cr>
-
-" ---------------------------------------------------------------------------
-" Windows Mode
+" OS Specific implementation of Windows/Texmate mode
 " ---------------------------------------------------------------------------
 
 " Use CTRL-Q to do what CTRL-V used to do
-noremap <C-Q> <C-V>
+noremap <C-q> <C-v>
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
-" CTRL-X and SHIFT-Del are Cut
-vnoremap <C-X> d
-vnoremap <S-Del> d
-" CTRL-C and CTRL-Insert are Copy
-vnoremap <C-C> y
-vnoremap <C-Insert> y
-" CTRL-V and SHIFT-Insert are Paste
-map <C-V> p
-map <S-Insert> p
-" CTRL-Z is Undo; not in cmdline though
-noremap <C-Z> u
-inoremap <C-Z> <C-O>u
-" CTRL-Y is Redo (although not repeat); not in cmdline though
-noremap <C-Y> <C-R>
-inoremap <C-Y> <C-O><C-R>
-" Use CTRL-S for saving, also in Insert mode
-noremap <C-S>  :update<CR>
-vnoremap <C-S> <C-C>:update<CR>
-imap <C-S> <ESC><C-S>
 
-" ---------------------------------------------------------------------------
-" X Clipboard
-" ---------------------------------------------------------------------------
+noremap <leader>t <C-t>
 
-" Copy to X CLIPBOARD
-map <leader>c :w !xsel -i -b<CR><CR>
-"map <leader>cp :w !xsel -i -p<CR>
-" Paste from X CLIPBOARD
-"map <leader>p :r !xsel -b<CR>
-"map <leader>pp :r!xsel -p<CR>
+if has("mac")
+  let NERDTreeWinPos="right"
 
-function! XClipboardPaste ()
-    exec ':set paste'
-    exec ':r !xsel -b'
-    exec ':set nopaste'
-endfunction
-map <leader>p :call XClipboardPaste ()<CR>
+   " Copy and Paste already work fine
+
+  " Command-/ to toggle comments
+  map <D-/> <plug>NERDCommenterToggle<CR>
+
+  " Command-][ to increase/decrease indentation
+  vmap <D-]> >gv
+  vmap <D-[> <gv
+
+  let $PATH = $HOME .
+    \ '/usr/local/bin:/usr/local/sbin:' .
+    \ '/usr/pkg/bin:' .
+    \ '/opt/local/bin:/opt/local/sbin:' .
+    \ $PATH
+
+elseif has("unix")
+  let Tlist_Use_Right_Window = 1
+
+  map <silent> <leader>c :w !xsel -i -b<CR><CR>
+  function! XClipboardPaste ()
+      exec ':set paste'
+      exec ':r !xsel -b'
+      exec ':set nopaste'
+  endfunction
+  map <silent> <leader>p :call XClipboardPaste ()<CR>
+
+  " Abbreviated windows mode
+  vnoremap <C-x> d
+  vnoremap <S-Del> d
+  vnoremap <C-c> y
+  vnoremap <C-Insert> y
+  map <C-v> p
+  map <S-Insert> p
+  noremap <C-z> u
+  inoremap <C-z> <C-o>u
+  noremap <C-y> <C-r>
+  inoremap <C-y> <C-o><C-r>
+  noremap <C-s>  :update<CR>
+  vnoremap <C-s> <C-c>:update<CR>
+  imap <C-s> <ESC><C-s>
+
+  " can't map <C-/>, however, '/' sends an '_' so we can be sneaky
+  map <C-_> <plug>NERDCommenterToggle<CR>
+
+  " we can't map <C-[> to the reverse since its used for ESC
+  noremap <leader>] <C-]>
+  map <C-]> >
+
+endif
+
+" Store g:github_user and g:github_token in here
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif
