@@ -35,12 +35,6 @@ if $STY != ""
     set t_fs=\
 endif
 
-if has("gui_running")
-  set guioptions=-t
-  set title
-  set guifont=Monaco:h12
-endif
-
 " ---------------------------------------------------------------------------
 " Colors / Theme
 " ---------------------------------------------------------------------------
@@ -49,7 +43,7 @@ syntax on
 filetype plugin indent on
 
 set t_Co=256
-colorscheme railscasts
+colorscheme darktango
 
 " ---------------------------------------------------------------------------
 "  Highlight
@@ -246,9 +240,9 @@ let g:is_bash = 1
 "  Misc mappings
 " ---------------------------------------------------------------------------
 
-map <leader>f :tabnew <cfile><CR>
-map <leader>d :e %:h/<CR>
-map <leader>dt :tabnew %:h/<CR>
+map ,f :tabnew <cfile><CR>
+map ,d :e %:h/<CR>
+map ,dt :tabnew %:h/<CR>
 
 "map <f9> :w<CR>:!python %<CR>
 
@@ -324,9 +318,9 @@ let hs_highlight_debug = 1
 " ---------------------------------------------------------------------------
 
 let Tlist_Exit_OnlyWindow = 1
-let NERDTreeWinPos="right"
+let Tlist_Use_Right_Window = 1
+"let NERDTreeWinPos=right
 let NERDTreeWinSize=32
-"let Tlist_Use_Right_Window = 1
 
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :TlistToggle<CR>
@@ -349,33 +343,6 @@ map <C-]> >
 " can't map <C-/>, however, '/' sends an '_' so we can be sneaky
 nmap <C-_> :call NERDComment(0, "invert")<cr>
 vmap <C-_> :call NERDComment(0, "invert")<cr>
-
-
-" ---------------------------------------------------------------------------
-" Linux Specific
-" ---------------------------------------------------------------------------
-
-
-let s:uname = system("echo -n \"$(uname)\"")
-if !v:shell_error && s:uname == "Linux"
-
-" ---------------------------------------------------------------------------
-" X Clipboard
-" ---------------------------------------------------------------------------
-
-" Copy to X CLIPBOARD
-map <leader>c :w !xsel -i -b<CR><CR>
-"map <leader>cp :w !xsel -i -p<CR>
-" Paste from X CLIPBOARD
-"map <leader>p :r !xsel -b<CR>
-"map <leader>pp :r!xsel -p<CR>
-
-function! XClipboardPaste ()
-    exec ':set paste'
-    exec ':r !xsel -b'
-    exec ':set nopaste'
-endfunction
-map <leader>p :call XClipboardPaste ()<CR>
 
 " ---------------------------------------------------------------------------
 " Windows Mode
@@ -405,4 +372,20 @@ noremap <C-S>  :update<CR>
 vnoremap <C-S> <C-C>:update<CR>
 imap <C-S> <ESC><C-S>
 
-endif
+" ---------------------------------------------------------------------------
+" X Clipboard
+" ---------------------------------------------------------------------------
+
+" Copy to X CLIPBOARD
+map <leader>c :w !xsel -i -b<CR><CR>
+"map <leader>cp :w !xsel -i -p<CR>
+" Paste from X CLIPBOARD
+"map <leader>p :r !xsel -b<CR>
+"map <leader>pp :r!xsel -p<CR>
+
+function! XClipboardPaste ()
+    exec ':set paste'
+    exec ':r !xsel -b'
+    exec ':set nopaste'
+endfunction
+map <leader>p :call XClipboardPaste ()<CR>
