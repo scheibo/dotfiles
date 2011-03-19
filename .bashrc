@@ -114,7 +114,7 @@ if [ "$UNAME" = Darwin ]; then
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
     source ~/.hg_bash_completion
-    export GEMEDITOR=mate
+    export GEMEDITOR=mvim
 
     # put ports on the paths if /opt/local exists
     test -x /opt/local -a ! -L /opt/local && {

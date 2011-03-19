@@ -44,11 +44,11 @@ filetype plugin indent on
 
 set t_Co=256
 
-if has("gui_running")
-  colorscheme railscasts
-else
+"if has("gui_running")
+  "colorscheme railscasts
+"else
   colorscheme darktango
-endif
+"endif
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -307,13 +307,14 @@ au FileType python    set tw=79  ts=4
 " File Type Syntax Highlighting
 " ---------------------------------------------------------------------------
 
-let is_mzscheme=1
-let python_highlight_all=1
-let hs_highlight_delimiters = 1
-let hs_highlight_boolean = 1
-let hs_highlight_types = 1
-let hs_highlight_more_types = 1
-let hs_highlight_debug = 1
+let g:is_mzscheme=1
+let g:python_highlight_all=1
+let g:hs_highlight_delimiters = 1
+let g:hs_highlight_boolean = 1
+let g:hs_highlight_types = 1
+let g:hs_highlight_more_types = 1
+let g:hs_highlight_debug = 1
+let g:ruby_operators = 1
 
 " ---------------------------------------------------------------------------
 " Plugins
@@ -332,8 +333,10 @@ vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
 
 " Enable syntastic syntax checking
-let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=1
+"let g:syntastic_enable_signs=1
+"let g:syntastic_quiet_warnings=1
+let g:syntastic_stl_format = '<%E{E:%e - %feL}%B{, }%W{W:%w - %fwL}> '
+set statusline=%<%f\ %h%m%r%=%{SyntasticStatuslineFlag()}%-14.(%l,%c%V%)\ %P
 
 " gist-vim defaults
 if has("mac")
