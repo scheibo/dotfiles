@@ -6,22 +6,79 @@
 set title
 set number
 
-set antialias
-set guifont=Monaco:h12
-set lines=60 columns=250
 set guioptions=gemrc
-winpos 72 1034
 set showtabline=2
-"set transparency=15
 set clipboard+=unnamed
-
-highlight NonText guifg=#2B2B2B
+set fuoptions=maxhorz,maxvert
 
 " No ruby support, Cmd-T not an option, lets use PeepOpen
 let g:peepopen_quit=1
 
-" Command-Shift-F for Ack
-map <D-f> :Ack<space>
+" Control-Shift-F for Ack
+map <C-S-f> :Ack<space>
+
+" -----------------------------------------------------------
+" Colorscheme Changer
+" -----------------------------------------------------------
+
+" default for darktango
+set noantialias
+set guifont=Terminus:h16
+set lines=60 columns=219
+winpos 75 1034
+
+function ChangedColorscheme()
+  if g:colors_name == 'railscasts'
+    set guifont=Monaco:h12
+    "set guifont=Bitstream\ Vera\ Sans\ Mono:h14
+    set antialias
+    set lines=60 columns=250
+    winpos 72 1034
+
+    hi NonText guifg=#2B2B2B
+    hi MatchParen guibg=#454545
+
+    hi Delimiter guifg=#E6E1DC
+    hi StatusLineNC guibg=#333435 gui=NONE
+
+    " Make more like Textmate
+    hi rubyStringSpecial guifg=#519F50
+    hi rubyInterpolation guifg=#519F50
+  else
+    " darktango stuff
+    set noantialias
+    set guifont=Terminus:h16
+    set lines=60 columns=219
+    winpos 75 1034
+  endif
+endfunction
+au ColorScheme * call ChangedColorscheme()
+
+function ToggleColorscheme()
+  if g:colors_name == 'railscasts'
+    colorscheme darktango
+  else
+    colorscheme railscasts
+  endif
+endfunction
+map <leader>x :call ToggleColorscheme ()<CR>
+
+" -----------------------------------------------------------
+" Highlight
+" -----------------------------------------------------------
+
+hi link rubyStringEscape rubyInterpolation
+hi link rubyInterpolationDelimiter rubyInterpolation
+hi link RubySelf Identifier
+hi link rubyStringDelimiter rubyString
+hi link rubyRailsMethod Normal
+hi link rubyRailsARMethod Type
+hi link rubyRailsRenderMethod Type
+hi link rubyRailsHelperMethod Type
+hi link rubyRailsViewMethod Type
+hi link rubyRailsMigrationMethod Type
+hi link rubyRailsControllerMethod Type
+hi link rubyRailsFilterMethod Type
 
 " -----------------------------------------------------------
 " Tabs
