@@ -304,13 +304,14 @@ au FileType python    set tw=79  ts=4
 " File Type Syntax Highlighting
 " ---------------------------------------------------------------------------
 
-let is_mzscheme=1
-let python_highlight_all=1
-let hs_highlight_delimiters = 1
-let hs_highlight_boolean = 1
-let hs_highlight_types = 1
-let hs_highlight_more_types = 1
-let hs_highlight_debug = 1
+let g:is_mzscheme=1
+let g:python_highlight_all=1
+let g:hs_highlight_delimiters = 1
+let g:hs_highlight_boolean = 1
+let g:hs_highlight_types = 1
+let g:hs_highlight_more_types = 1
+let g:hs_highlight_debug = 1
+let g:ruby_operators = 1
 
 " ---------------------------------------------------------------------------
 " Plugins
