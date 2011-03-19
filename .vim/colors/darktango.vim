@@ -17,7 +17,7 @@ let g:colors_name = "darktango"
 " *** Default Colors *** "
 hi Normal         guibg=#080808  guifg=#EEEEEC  ctermbg=232  ctermfg=15  cterm=none
 hi NonText        guibg=#080808  guifg=#729FCF  ctermbg=232  ctermfg=12  cterm=none
-hi Cursor         guibg=#2E3436                 ctermbg=0                cterm=none
+hi Cursor         guibg=#FFFFFF                 ctermbg=0                cterm=none
 hi CursorLine     guibg=#2E3436                 ctermbg=0                cterm=none
 hi CursorColumn   guibg=#2E3436                 ctermbg=0                cterm=none
 hi SignColumn     guibg=#080808  guifg=#EEEEEC  ctermbg=232  ctermfg=15  cterm=none

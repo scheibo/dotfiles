@@ -6,14 +6,8 @@
 set title
 set number
 
-set antialias
-set guifont=Monaco:h12
-"set guifont=Bitstream\ Vera\ Sans\ Mono:h14
-set lines=60 columns=250
 set guioptions=gemrc
-winpos 72 1034
 set showtabline=2
-"set transparency=15
 set clipboard+=unnamed
 set fuoptions=maxhorz,maxvert
 
@@ -24,18 +18,54 @@ let g:peepopen_quit=1
 map <C-S-f> :Ack<space>
 
 " -----------------------------------------------------------
-" Highlight
+" Colorscheme Changer
 " -----------------------------------------------------------
 
-hi NonText guifg=#2B2B2B
-hi MatchParen guibg=#454545
+" default for darktango
+set noantialias
+set guifont=Terminus:h16
+set lines=60 columns=219
+winpos 75 1034
 
-hi Delimiter guifg=#E6E1DC
-hi StatusLineNC guibg=#333435 gui=NONE
+function ChangedColorscheme()
+  if g:colors_name == 'railscasts'
+    set guifont=Monaco:h12
+    "set guifont=Bitstream\ Vera\ Sans\ Mono:h14
+    set antialias
+    set lines=60 columns=250
+    winpos 72 1034
 
-" Make more like Textmate
-hi rubyStringSpecial guifg=#519F50
-hi rubyInterpolation guifg=#519F50
+    hi NonText guifg=#2B2B2B
+    hi MatchParen guibg=#454545
+
+    hi Delimiter guifg=#E6E1DC
+    hi StatusLineNC guibg=#333435 gui=NONE
+
+    " Make more like Textmate
+    hi rubyStringSpecial guifg=#519F50
+    hi rubyInterpolation guifg=#519F50
+  else
+    " darktango stuff
+    set noantialias
+    set guifont=Terminus:h16
+    set lines=60 columns=219
+    winpos 75 1034
+  endif
+endfunction
+au ColorScheme * call ChangedColorscheme()
+
+function ToggleColorscheme()
+  if g:colors_name == 'railscasts'
+    colorscheme darktango
+  else
+    colorscheme railscasts
+  endif
+endfunction
+map <leader>x :call ToggleColorscheme ()<CR>
+
+" -----------------------------------------------------------
+" Highlight
+" -----------------------------------------------------------
 
 hi link rubyStringEscape rubyInterpolation
 hi link rubyInterpolationDelimiter rubyInterpolation

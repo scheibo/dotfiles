@@ -44,11 +44,11 @@ filetype plugin indent on
 
 set t_Co=256
 
-if has("gui_running")
-  colorscheme railscasts
-else
+"if has("gui_running")
+  "colorscheme railscasts
+"else
   colorscheme darktango
-endif
+"endif
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -329,8 +329,10 @@ nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
 " Enable syntastic syntax checking
-let g:syntastic_enable_signs=1
-let g:syntastic_quiet_warnings=1
+"let g:syntastic_enable_signs=1
+"let g:syntastic_quiet_warnings=1
+let g:syntastic_stl_format = '<%E{E:%e - %feL}%B{, }%W{W:%w - %fwL}> '
+set statusline=%<%f\ %h%m%r%=%{SyntasticStatuslineFlag()}%-14.(%l,%c%V%)\ %P
 
 " gist-vim defaults
 if has("mac")
