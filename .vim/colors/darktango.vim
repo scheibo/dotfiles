@@ -51,10 +51,10 @@ hi link Number Constant
 hi link Debug Exception
 
 " *** Diff *** "
-hi DiffAdd                       guifg=#8AE234  ctermbg=232  ctermfg=2    cterm=bold
-hi DiffChange                                   ctermbg=232
-hi DiffDelete                    guifg=#EF2929  ctermbg=232  ctermfg=1    cterm=bold
-hi DiffText                      guifg=#FCE94F  ctermbg=232  ctermfg=11   cterm=none
+hi DiffAdd         guibg=#080808 guifg=#8AE234  ctermbg=232  ctermfg=2    cterm=bold
+hi DiffChange      guibg=#080808                ctermbg=232
+hi DiffDelete      guibg=#080808 guifg=#EF2929  ctermbg=232  ctermfg=1    cterm=bold
+hi DiffText        guibg=#080808 guifg=#FCE94F  ctermbg=232  ctermfg=11   cterm=none
 
 " *** Spelling *** "
 hi SpellBad       guibg=#EF2929  guifg=#EEEEEC  ctermbg=9    ctermfg=15
@@ -63,12 +63,12 @@ hi SpellRare      guibg=#4A9A06  guifg=#080808  ctermbg=2    ctermfg=232
 hi SpellLocal     guibg=#0B939B  guifg=#EEEEEC  ctermbg=6    ctermfg=15
 
 " *** Window Elements *** "
-hi LineNr                        guifg=#A40000  ctermbg=232  ctermfg=88   cterm=none  gui=NONE
+hi LineNr                        guifg=#A40000               ctermfg=88   cterm=none  gui=NONE
 hi StatusLine     guibg=#2E3436  guifg=#EEEEEC  ctermbg=0    ctermfg=15   cterm=none  gui=NONE
 hi StatusLineNC   guibg=#555753  guifg=#D3D7CF  ctermbg=8    ctermfg=7    cterm=none  gui=NONE
 hi VertSplit      guibg=#555753  guifg=#121212  ctermbg=8    ctermfg=232  cterm=none  gui=NONE
-hi FoldColumn                    guifg=#0B939B  ctermbg=232  ctermfg=6    cterm=none  gui=NONE
-hi Folded                        guifg=#0B939B  ctermbg=232  ctermfg=6    cterm=none  gui=NONE
+hi FoldColumn     guibg=#080808  guifg=#0B939B  ctermbg=232  ctermfg=6    cterm=none  gui=NONE
+hi Folded         guibg=#080808  guifg=#0B939B  ctermbg=232  ctermfg=6    cterm=none  gui=NONE
 hi TabLine        guibg=#555753  guifg=#D3D7CF  ctermbg=8    ctermfg=7    cterm=none
 hi TabLineSel     guibg=#2E3436  guifg=#EEEEEC  ctermbg=0    ctermfg=15   cterm=none
 hi TabLineFill    guibg=#555753  guifg=#D3D7CF  ctermbg=8    ctermfg=7    cterm=none
