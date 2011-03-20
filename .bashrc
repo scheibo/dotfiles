@@ -115,6 +115,7 @@ if [ "$UNAME" = Darwin ]; then
 
     source ~/.hg_bash_completion
     export GEMEDITOR=mvim
+    alias vim='mvim'
 
     # put ports on the paths if /opt/local exists
     test -x /opt/local -a ! -L /opt/local && {

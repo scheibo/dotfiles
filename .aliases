@@ -142,7 +142,7 @@ alias du1='du -h --max-depth=1'
 alias fn='find . -name'
 
 alias irb='irb --prompt simple'
-alias vi='vim'
+alias vi='\vim'
 alias rails2='rails _2.3.8_'
 
 alias wget='wget --no-check-certificate'
