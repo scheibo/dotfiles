@@ -64,8 +64,8 @@ hi SpellLocal     guibg=#0B939B  guifg=#EEEEEC  ctermbg=6    ctermfg=15
 
 " *** Window Elements *** "
 hi LineNr                        guifg=#A40000               ctermfg=88   cterm=none  gui=NONE
-hi StatusLine     guibg=#2E3436  guifg=#EEEEEC  ctermbg=0    ctermfg=15   cterm=none  gui=NONE
-hi StatusLineNC   guibg=#555753  guifg=#D3D7CF  ctermbg=8    ctermfg=7    cterm=none  gui=NONE
+hi StatusLineNC   guibg=#2E3436  guifg=#EEEEEC  ctermbg=0    ctermfg=15   cterm=none  gui=NONE
+hi StatusLine     guibg=#555753  guifg=#D3D7CF  ctermbg=8    ctermfg=7    cterm=none  gui=NONE
 hi VertSplit      guibg=#555753  guifg=#121212  ctermbg=8    ctermfg=232  cterm=none  gui=NONE
 hi FoldColumn     guibg=#080808  guifg=#0B939B  ctermbg=232  ctermfg=6    cterm=none  gui=NONE
 hi Folded         guibg=#080808  guifg=#0B939B  ctermbg=232  ctermfg=6    cterm=none  gui=NONE
