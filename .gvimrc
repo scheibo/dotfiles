@@ -44,6 +44,11 @@ function ChangedColorscheme()
     " Make more like Textmate
     hi rubyStringSpecial guifg=#519F50
     hi rubyInterpolation guifg=#519F50
+
+    hi link htmlArg htmlTag
+    hi link htmlSpecialTagName htmlTag
+    hi link erubyDelimiter Normal
+    hi link htmlSpecialChar Constant
   else
     " darktango stuff
     set noantialias
