@@ -64,23 +64,6 @@ endfunction
 map <leader>x :call ToggleColorscheme ()<CR>
 
 " -----------------------------------------------------------
-" Highlight
-" -----------------------------------------------------------
-
-hi link rubyStringEscape rubyInterpolation
-hi link rubyInterpolationDelimiter rubyInterpolation
-hi link RubySelf Identifier
-hi link rubyStringDelimiter rubyString
-hi link rubyRailsMethod Normal
-hi link rubyRailsARMethod Type
-hi link rubyRailsRenderMethod Type
-hi link rubyRailsHelperMethod Type
-hi link rubyRailsViewMethod Type
-hi link rubyRailsMigrationMethod Type
-hi link rubyRailsControllerMethod Type
-hi link rubyRailsFilterMethod Type
-
-" -----------------------------------------------------------
 " Tabs
 " -----------------------------------------------------------
 

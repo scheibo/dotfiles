@@ -298,8 +298,6 @@ au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python    set tw=79  ts=4
 
-"au FileType ruby let b:delimitMate_autoclose = 0
-
 " ---------------------------------------------------------------------------
 " File Type Syntax Highlighting
 " ---------------------------------------------------------------------------
@@ -312,6 +310,33 @@ let g:hs_highlight_types = 1
 let g:hs_highlight_more_types = 1
 let g:hs_highlight_debug = 1
 let g:ruby_operators = 1
+
+" -----------------------------------------------------------
+" Highlight
+" -----------------------------------------------------------
+
+hi link rubyStringEscape rubyInterpolation
+hi link rubyInterpolationDelimiter rubyInterpolation
+hi link RubySelf Identifier
+hi link rubyStringDelimiter rubyString
+hi link rubyRailsMethod Normal
+hi link erubyRailsMethod Type
+hi link rubyRailsARMethod Type
+hi link rubyRailsRenderMethod Type
+hi link rubyRailsHelperMethod Type
+hi link rubyRailsViewMethod Type
+hi link rubyRailsMigrationMethod Type
+hi link rubyRailsControllerMethod Type
+hi link rubyRailsFilterMethod Type
+hi link htmlArg htmlTag
+hi link htmlSpecialTagName htmlTag
+hi link erubyDelimiter Normal
+hi link htmlSpecialChar Constant
+hi link javascriptBraces Normal
+hi link javaScriptIdentifier Keyword
+hi link javaScriptNull Constant
+hi link javaScriptFunction Keyword
+hi link javaScript Normal
 
 " ---------------------------------------------------------------------------
 " Plugins
