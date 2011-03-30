@@ -43,15 +43,12 @@ syntax on
 filetype plugin indent on
 
 set t_Co=256
-colorscheme dt
 
-" ---------------------------------------------------------------------------
-"  Highlight
-" ---------------------------------------------------------------------------
-
-" highlight Comment         ctermfg=DarkGrey guifg=#444444
-" highlight StatusLineNC    ctermfg=Black ctermbg=DarkGrey cterm=bold
-" highlight StatusLine      ctermbg=Black ctermfg=LightGrey
+"if has("gui_running")
+  "colorscheme railscasts
+"else
+  colorscheme darktango
+"endif
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -148,6 +145,9 @@ nnoremap q: <Nop>
 nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
+" fix the accident of typing Q instead of q!
+cnoremap Q q
+
 " quicker window navigation
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -179,7 +179,13 @@ MapToggle <F8> wrap
 nnoremap ' `
 nnoremap ` '
 
-vnoremap <C-W> :Align = <CR>
+vnoremap <C-w> :Align = <CR>
+
+vmap > >gv
+vmap < <gv
+
+vmap > >gv
+vmap < <gv
 
 " ----------------------------------------------------------------------------
 "  Auto Commands
@@ -195,17 +201,16 @@ autocmd FileType javascript setlocal nocindent
 " strip whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
-" ----------------------------------------------------------------------------
-"  PATH on MacOS X
-" ----------------------------------------------------------------------------
+au FileType scheme map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
 
-if system('uname') =~ 'Darwin'
-  let $PATH = $HOME .
-    \ '/usr/local/bin:/usr/local/sbin:' .
-    \ '/usr/pkg/bin:' .
-    \ '/opt/local/bin:/opt/local/sbin:' .
-    \ $PATH
-endif
+function ModeChange()
+  if getline(1) =~ "^#!.*/bin/*"
+      silent !chmod u+x <afile>
+  endif
+endfunction
+au BufWritePost * call ModeChange()
+
+au FileType make  set noexpandtab
 
 " ---------------------------------------------------------------------------
 "  sh config
@@ -218,12 +223,9 @@ let g:is_bash = 1
 "  Misc mappings
 " ---------------------------------------------------------------------------
 
-map ,f :tabnew <cfile><CR>
-map ,d :e %:h/<CR>
-map ,dt :tabnew %:h/<CR>
-map <C-h> :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
-
-"map <f9> :w<CR>:!python %<CR>
+map <leader>f :tabnew <cfile><CR>
+map <leader>d :e %:h/<CR>
+map <leader>dt :tabnew %:h/<CR>
 
 " ---------------------------------------------------------------------------
 "  Open URL on current line in browser
@@ -235,7 +237,7 @@ function! Browser ()
     let line = escape (line, "#?&;|%")
     exec ':silent !open ' . "\"" . line . "\""
 endfunction
-map ,w :call Browser ()<CR>
+map <leader>w :call Browser ()<CR>
 
 " ---------------------------------------------------------------------------
 "  Strip all trailing whitespace in file
@@ -244,9 +246,9 @@ map ,w :call Browser ()<CR>
 function! StripWhitespace ()
     exec ':%s/ \+$//gc'
 endfunction
-map ,s :call StripWhitespace ()<CR>
+map <leader>s :call StripWhitespace ()<CR>
 
-:nnoremap <silent> <F9> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F9> :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<CR>
 
 " ---------------------------------------------------------------------------
 " astrails bonuses
@@ -255,18 +257,34 @@ map ,s :call StripWhitespace ()<CR>
 "make Y consistent with C and D
 nnoremap Y y$
 
-" Ctrl-E to switch between 2 last buffers
-nmap <C-E> :b#<CR>
+" <s>Ctrl-E</s><b>,b</b> to switch between 2 last buffers
+nmap <leader>b :b#<CR>
 
 " ,e to fast finding files. just type beginning of a name and hit TAB
 nmap <leader>e :e **/
 
 " Ctrl-N to disable search match highlight
-nmap <silent> <C-N> :silent noh<CR>
+nmap <silent> <C-n> :silent noh<CR>
 
 " ---------------------------------------------------------------------------
 " File Types
 " ---------------------------------------------------------------------------
+
+function s:setupWrapping()
+  set wrap
+  set wm=2
+  set textwidth=72
+endfunction
+
+function s:setupMarkup()
+  call s:setupWrapping()
+  map <buffer> <leader>pr :Mm <CR>
+endfunction
+
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
+au BufRead,BufNewFile *.txt call s:setupWrapping()
 
 au BufRead,BufNewFile *.rkt        set ft=scheme
 au BufRead,BufNewFile *.god        set ft=ruby
@@ -280,62 +298,156 @@ au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
 au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
 
+" make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
+au FileType python    set tw=79  ts=4
+
 " ---------------------------------------------------------------------------
 " File Type Syntax Highlighting
 " ---------------------------------------------------------------------------
 
-let is_mzscheme=1
-let python_highlight_all=1
-let hs_highlight_delimiters = 1
-let hs_highlight_boolean = 1
-let hs_highlight_types = 1
-let hs_highlight_more_types = 1
-let hs_highlight_debug = 1
+let g:is_mzscheme=1
+let g:python_highlight_all=1
+let g:hs_highlight_delimiters = 1
+let g:hs_highlight_boolean = 1
+let g:hs_highlight_types = 1
+let g:hs_highlight_more_types = 1
+let g:hs_highlight_debug = 1
+let g:ruby_operators = 1
+
+" -----------------------------------------------------------
+" Highlight
+" -----------------------------------------------------------
+
+hi link rubyStringEscape rubyInterpolation
+hi link rubyInterpolationDelimiter rubyInterpolation
+hi link RubySelf Identifier
+hi link rubyStringDelimiter rubyString
+hi link rubyRailsMethod Normal
+hi link erubyRailsMethod Type
+hi link rubyRailsARMethod Type
+hi link rubyRailsRenderMethod Type
+hi link rubyRailsHelperMethod Type
+hi link rubyRailsViewMethod Type
+hi link rubyRailsMigrationMethod Type
+hi link rubyRailsControllerMethod Type
+hi link rubyRailsFilterMethod Type
+hi link htmlArg htmlTag
+hi link htmlSpecialTagName htmlTag
+hi link erubyDelimiter Normal
+hi link htmlSpecialChar Constant
+hi link javascriptBraces Normal
+hi link javaScriptIdentifier Keyword
+hi link javaScriptNull Constant
+hi link javaScriptFunction Keyword
+hi link javaScript Normal
 
 " ---------------------------------------------------------------------------
 " Plugins
 " ---------------------------------------------------------------------------
 
-let Tlist_Exit_OnlyWindow = 1
-let Tlist_Use_Right_Window = 1
-"let NERDTreeWinPos=right
-let NERDTreeWinSize=32
-
 nnoremap <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :TlistToggle<CR>
+
+let NERDTreeWinSize=32
+let Tlist_Exit_OnlyWindow = 1
 
 " nerdcommenter
 " ,/ to invert comment on the current line/selection
 nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
+
+" Enable syntastic syntax checking
+"let g:syntastic_enable_signs=1
+"let g:syntastic_quiet_warnings=1
+let g:syntastic_stl_format = '<%E{E:%e - %feL}%B{, }%W{W:%w - %fwL}> '
+set statusline=%<%f\ %h%m%r%=%{SyntasticStatuslineFlag()}%-14.(%l,%c%V%)\ %P
+
+" gist-vim defaults
+if has("mac")
+  let g:gist_clip_command = 'pbcopy'
+elseif has("unix")
+  let g:gist_clip_command = 'xclip -selection clipboard'
+endif
+let g:gist_detect_filetype = 1
+let g:gist_open_browser_after_post = 1
+
+" Turn off jslint errors by default
+let g:JSLintHighlightErrorLine = 0
+
+" MacVIM shift+arrow-keys behavior (required in .vimrc)
+if has("gui_macvim")
+  let macvim_hig_shift_movement = 1
+endif
+
+" % to bounce from do to end etc.
+runtime! macros/matchit.vim
+
 " ---------------------------------------------------------------------------
-" Windows Mode
+" OS Specific implementation of Windows/Texmate mode
 " ---------------------------------------------------------------------------
 
 " Use CTRL-Q to do what CTRL-V used to do
-noremap <C-Q>		<C-V>
+noremap <C-q> <C-v>
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
-" CTRL-X and SHIFT-Del are Cut
-vnoremap <C-X> d
-vnoremap <S-Del> d
-" CTRL-C and CTRL-Insert are Copy
-vnoremap <C-C> y
-vnoremap <C-Insert> y
-" CTRL-V and SHIFT-Insert are Paste
-map <C-V> p
-map <S-Insert> p
-" CTRL-Z is Undo; not in cmdline though
-noremap <C-Z> u
-inoremap <C-Z> <C-O>u
-" CTRL-Y is Redo (although not repeat); not in cmdline though
-noremap <C-Y> <C-R>
-inoremap <C-Y> <C-O><C-R>
-" CTRL-A is Select all
-noremap <C-A> gggH<C-O>G
-inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
-cnoremap <C-A> <C-C>gggH<C-O>G
-onoremap <C-A> <C-C>gggH<C-O>G
-snoremap <C-A> <C-C>gggH<C-O>G
-xnoremap <C-A> <C-C>ggVG
+
+noremap <leader>t <C-t>
+
+if has("mac")
+  let NERDTreeWinPos="right"
+
+   " Copy and Paste already work fine
+
+  " Command-/ to toggle comments
+  map <D-/> <plug>NERDCommenterToggle<CR>
+
+  " Command-][ to increase/decrease indentation
+  vmap <D-]> >gv
+  vmap <D-[> <gv
+
+  let $PATH = $HOME .
+    \ '/usr/local/bin:/usr/local/sbin:' .
+    \ '/usr/pkg/bin:' .
+    \ '/opt/local/bin:/opt/local/sbin:' .
+    \ $PATH
+
+elseif has("unix")
+  let Tlist_Use_Right_Window = 1
+
+  map <silent> <leader>c :w !xsel -i -b<CR><CR>
+  function! XClipboardPaste ()
+      exec ':set paste'
+      exec ':r !xsel -b'
+      exec ':set nopaste'
+  endfunction
+  map <silent> <leader>p :call XClipboardPaste ()<CR>
+
+  " Abbreviated windows mode
+  vnoremap <C-x> d
+  vnoremap <S-Del> d
+  vnoremap <C-c> y
+  vnoremap <C-Insert> y
+  map <C-v> p
+  map <S-Insert> p
+  noremap <C-z> u
+  inoremap <C-z> <C-o>u
+  noremap <C-y> <C-r>
+  inoremap <C-y> <C-o><C-r>
+  noremap <C-s>  :update<CR>
+  vnoremap <C-s> <C-c>:update<CR>
+  imap <C-s> <ESC><C-s>
+
+  " can't map <C-/>, however, '/' sends an '_' so we can be sneaky
+  map <C-_> <plug>NERDCommenterToggle<CR>
+
+  " we can't map <C-[> to the reverse since its used for ESC
+  noremap <leader>] <C-]>
+  map <C-]> >
+
+endif
+
+" Store g:github_user and g:github_token in here
+if filereadable(expand("~/.vimrc.local"))
+  source ~/.vimrc.local
+endif

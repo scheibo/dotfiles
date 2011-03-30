@@ -114,7 +114,8 @@ if [ "$UNAME" = Darwin ]; then
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
     source ~/.hg_bash_completion
-    export GEMEDITOR=mate
+    export GEMEDITOR=mvim
+    alias vim='mvim'
 
     # put ports on the paths if /opt/local exists
     test -x /opt/local -a ! -L /opt/local && {
@@ -173,5 +174,9 @@ fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 export BINPATH=~
-stty -ixon
+
+if [ -t 0 ]; then
+    stty -ixon
+fi
+
 set -o history
