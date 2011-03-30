@@ -49,7 +49,8 @@ syn keyword javaScriptType		Array Boolean Date Function Number Object String Reg
 syn keyword javaScriptStatement		return with
 syn keyword javaScriptBoolean		true false
 syn keyword javaScriptNull		null undefined
-syn keyword javaScriptIdentifier	arguments this var let
+syn keyword javaScriptIdentifier	arguments var let
+syn keyword javaScriptThis              this
 syn keyword javaScriptLabel		case default
 syn keyword javaScriptException		try catch finally throw
 syn keyword javaScriptMessage		alert confirm prompt status
@@ -114,6 +115,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptRegexpString		String
 
   HiLink javaScriptIdentifier		Identifier
+  HiLink javaScriptThis 		Identifier
   HiLink javaScriptLabel		Label
   HiLink javaScriptException		Exception
   HiLink javaScriptMessage		Keyword
