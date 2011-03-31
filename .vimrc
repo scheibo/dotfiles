@@ -111,6 +111,11 @@ set virtualedit=block
 "  Mappings
 " ----------------------------------------------------------------------------
 
+"inoremap <Left>  <NOP>
+"inoremap <Right> <NOP>
+"inoremap <Up>    <NOP>
+"inoremap <Down>  <NOP>
+
 " remap <LEADER> to ',' (instead of '\')
 let mapleader = ","
 
