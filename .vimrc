@@ -111,6 +111,11 @@ set virtualedit=block
 "  Mappings
 " ----------------------------------------------------------------------------
 
+"inoremap <Left>  <NOP>
+"inoremap <Right> <NOP>
+"inoremap <Up>    <NOP>
+"inoremap <Down>  <NOP>
+
 " remap <LEADER> to ',' (instead of '\')
 let mapleader = ","
 
@@ -323,7 +328,8 @@ hi link rubyInterpolationDelimiter rubyInterpolation
 hi link RubySelf Identifier
 hi link rubyStringDelimiter rubyString
 hi link rubyRailsMethod Normal
-hi link erubyRailsMethod Type
+hi link erubyRailsMethod Normal
+hi link erubyRailsRenderMethod Type
 hi link rubyRailsARMethod Type
 hi link rubyRailsRenderMethod Type
 hi link rubyRailsHelperMethod Type
@@ -331,11 +337,8 @@ hi link rubyRailsViewMethod Type
 hi link rubyRailsMigrationMethod Type
 hi link rubyRailsControllerMethod Type
 hi link rubyRailsFilterMethod Type
-hi link htmlArg htmlTag
-hi link htmlSpecialTagName htmlTag
-hi link erubyDelimiter Normal
-hi link htmlSpecialChar Constant
 hi link javascriptBraces Normal
+hi link javaScriptThis Identifier
 hi link javaScriptIdentifier Keyword
 hi link javaScriptNull Constant
 hi link javaScriptFunction Keyword

@@ -37,7 +37,7 @@ hi Statement                     guifg=#4E9A06               ctermfg=2    cterm=
 hi Special                       guifg=#AD7FA8               ctermfg=13   cterm=none
 hi String                        guifg=#EF2929               ctermfg=9    cterm=none
 hi Structure                     guifg=#729FCF               ctermfg=12   cterm=none
-hi ToDo                          guifg=#F57900               ctermfg=208  cterm=bold
+hi ToDo                          guifg=#F57900  guibg=NONE   ctermfg=208  cterm=bold
 hi Identifier                    guifg=#0B939B               ctermfg=6    cterm=none
 hi Ignore                        guifg=#005f00               ctermfg=23   cterm=none
 hi MatchParen     guibg=#2E3436  guifg=#D3D7CF  ctermbg=0    ctermfg=7    cterm=none
