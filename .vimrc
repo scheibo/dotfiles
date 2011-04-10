@@ -225,14 +225,6 @@ au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
 let g:is_bash = 1
 
 " ---------------------------------------------------------------------------
-"  Misc mappings
-" ---------------------------------------------------------------------------
-
-map <leader>f :tabnew <cfile><CR>
-map <leader>d :e %:h/<CR>
-map <leader>dt :tabnew %:h/<CR>
-
-" ---------------------------------------------------------------------------
 "  Open URL on current line in browser
 " ---------------------------------------------------------------------------
 
@@ -359,7 +351,6 @@ let Tlist_Exit_OnlyWindow = 1
 nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
-
 " Enable syntastic syntax checking
 "let g:syntastic_enable_signs=1
 "let g:syntastic_quiet_warnings=1
@@ -447,6 +438,10 @@ elseif has("unix")
   " we can't map <C-[> to the reverse since its used for ESC
   noremap <leader>] <C-]>
   map <C-]> >
+
+  nmap <silent> <C-t> :CommandT<CR>
+  let g:CommandTMaxHeight=5
+
 
 endif
 
