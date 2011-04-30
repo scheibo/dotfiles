@@ -8,7 +8,7 @@
   control + alt + Return
 
 "dmenu_run -fn 'Terminus-9'  -nb '#555753' -nf '#D3D7DF' -sb '#2E3436' -sf '#EEEEEC'"
-  Menu
+  control + alt + space
 
 "amixer set Master 10%+"
   XF86AudioRaiseVolume

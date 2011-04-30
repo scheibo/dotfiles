@@ -439,8 +439,8 @@ elseif has("unix")
   noremap <leader>] <C-]>
   map <C-]> >
 
-  nmap <silent> <C-t> :CommandT<CR>
-  let g:CommandTMaxHeight=5
+  "nmap <silent> <C-t> :CommandT<CR>
+  "let g:CommandTMaxHeight=5
 
 
 endif
