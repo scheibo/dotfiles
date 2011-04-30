@@ -2,7 +2,7 @@
 # ~/.xinitrc
 
 # Wallpaper
-feh --bg-scale ~/pics/background.jpg &
+feh --bg-scale ~/pics/background.png &
 
 # Start programs
 urxvtd -q -o -f &
@@ -11,6 +11,7 @@ xbacklight -set 100 &
 xmodmap ~/.Xmodmap &
 #unclutter &
 amixer set Master 80% &
+prowler &
 bitlbee -D
 #synergyc -- 192.168.0.15
 dropboxd &
