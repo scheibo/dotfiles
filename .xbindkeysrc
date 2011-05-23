@@ -8,6 +8,9 @@
   control + alt + Return
 
 "dmenu_run -fn 'Terminus-9'  -nb '#555753' -nf '#D3D7DF' -sb '#2E3436' -sf '#EEEEEC'"
+  control + alt + space
+
+"google-chrome"
   Menu
 
 "amixer set Master 10%+"

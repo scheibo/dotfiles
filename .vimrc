@@ -449,3 +449,5 @@ endif
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'

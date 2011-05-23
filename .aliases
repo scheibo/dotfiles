@@ -144,8 +144,10 @@ alias du1='du -h --max-depth=1'
 alias fn='find . -name'
 
 alias irb='irb --prompt simple'
-alias vi='\vim'
+alias vi='command vim'
 alias rails2='rails _2.3.8_'
 
 alias wget='wget --no-check-certificate'
 alias sbashrc='source ~/.bashrc'
+alias ps2pdf='ps2pdf -sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true'
+
