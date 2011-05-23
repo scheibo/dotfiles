@@ -100,7 +100,8 @@ export PAGER MANPAGER
 
 ACK_PAGER="$PAGER"
 
-PS1="\[\e[32;1m\]\`if [[ \$? = "0" ]]; then echo "\\[\\e[32m\\]"; else echo "\\[\\e[31m\\]"; fi\`\u@\h$\[\e[37;0m\] "
+
+[[ -s '.prompt' ]] && source '.prompt'
 
 if [ "$UNAME" = Darwin ]; then
 
@@ -113,9 +114,8 @@ if [ "$UNAME" = Darwin ]; then
     export CLICOLOR=1
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
-    source ~/.hg_bash_completion
-    export GEMEDITOR=mvim
-    alias vim='mvim'
+    #source ~/.hg_bash_completion
+    export GEMEDITOR=mate
 
     # put ports on the paths if /opt/local exists
     test -x /opt/local -a ! -L /opt/local && {

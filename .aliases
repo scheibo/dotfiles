@@ -90,6 +90,7 @@ alias gcc99='gcc -std=c99 -O -Wall'
 alias crun='valgrind --leak-check=yes ./a.out'
 alias status='pwd && ls'
 alias s='clear && status'
+alias g='git'
 
 alias pacman='sudo pacman'
 alias pinstall='sudo pacman -S'
@@ -151,3 +152,4 @@ alias wget='wget --no-check-certificate'
 alias sbashrc='source ~/.bashrc'
 alias ps2pdf='ps2pdf -sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true'
 
+[[ -s '.git-aliases' ]] && source '.git-aliases'
