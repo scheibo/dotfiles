@@ -7,7 +7,7 @@ feh --bg-scale ~/pics/background.png &
 # Start programs
 urxvtd -q -o -f &
 xbindkeys &
-xbacklight -set 100 &
+xbacklight -set 0 &
 xmodmap ~/.Xmodmap &
 #unclutter &
 amixer set Master 80% &
