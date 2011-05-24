@@ -27,7 +27,7 @@ prompt_func() {
   fi
 
   if $(git rev-parse &>/dev/null) && [[ "$(git rev-parse --show-toplevel)" != "$HOME" ]]; then
-    PS1="\[\e[32;1m\]$color\u@\h\[\033[0;30m\]($(git_colored_branch)\[\033[0;30m\])$color$\[\e[0m\] "
+    PS1="\[\e[32;1m\]$color\u@\h\[\033[1;30m\]($(git_colored_branch)\[\033[1;30m\])$color$\[\e[0m\] "
   else
     PS1="\[\e[32;1m\]$color\u@\h$\[\e[37;0m\] "
   fi
