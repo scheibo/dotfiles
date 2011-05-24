@@ -172,7 +172,9 @@ if [ -f ~/.aliases ]; then
 fi
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -s "$HOME/.AideEnv" ]] && source "$HOME/.AideEnv"
 
+export RUBYLIB=/pr/core/vendor:/pr/core/lib:/pr/core/app
 export BINPATH=~/Code
 
 if [ -t 0 ]; then

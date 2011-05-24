@@ -2,6 +2,14 @@
 
 LS_COMMON="-hBG"
 
+ghurl() {
+  repo="$(basename "`git rev-parse --show-toplevel`")"
+  if [ "$repo" = "core" ]; then
+    repo="postrank-core"
+  fi
+  echo "https://github.com/postrank/$repo/commit/$(git show -s --format=format:%H $1)" | pbcopy | pbpaste;
+}
+
 dircolors="$(type -P gdircolors dircolors | head -1)"
 test -n "$dircolors" && {
     COLORS=/etc/DIR_COLORS
@@ -64,6 +72,9 @@ cdir() { mkdir $1 && cd $1; }
 goto() { [[ -d "$1" ]] && cd "$1" || cd "$(dirname "$1")"; }
 cpf() { cp "$@" && goto "$_"; }
 mvf() { mv "$@" && goto "$_"; }
+
+gg() { grep --exclude-dir="\.git" --exclude-dir="vendor" --exclude-dir='experiments' -R -e "$1" .; }
+ff() { find . -regex ".*/${*}[^/]*"; }
 
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
