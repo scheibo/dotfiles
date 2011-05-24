@@ -18,7 +18,6 @@ set autowrite
 set completeopt=longest
 set laststatus=2
 set nomousehide
-set wrap
 set shortmess+=r
 set novisualbell
 set splitright
@@ -104,7 +103,7 @@ set expandtab
 set nosmarttab
 set smarttab
 set formatoptions+=n       " support for numbered/bullet lists
-set textwidth=80           " wrap at 80 chars by default
+"set textwidth=80           " wrap at 80 chars by default
 set virtualedit=block
 
 " ----------------------------------------------------------------------------
@@ -449,3 +448,5 @@ endif
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
