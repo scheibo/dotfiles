@@ -11,9 +11,11 @@ xbacklight -set 100 &
 xmodmap ~/.Xmodmap &
 #unclutter &
 amixer set Master 80% &
+#prowler &
 bitlbee -D
 #synergyc -- 192.168.0.15
 dropboxd &
+#touchpad &
 
 #conky | while read -r; do xsetroot -name "$REPLY"; done &
 #/home/scheibo/dxconky &

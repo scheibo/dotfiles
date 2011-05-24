@@ -18,7 +18,6 @@ set autowrite
 set completeopt=longest
 set laststatus=2
 set nomousehide
-set wrap
 set shortmess+=r
 set novisualbell
 set splitright
@@ -104,7 +103,7 @@ set expandtab
 set nosmarttab
 set smarttab
 set formatoptions+=n       " support for numbered/bullet lists
-set textwidth=80           " wrap at 80 chars by default
+"set textwidth=80           " wrap at 80 chars by default
 set virtualedit=block
 
 " ----------------------------------------------------------------------------
@@ -189,6 +188,9 @@ vnoremap <C-w> :Align = <CR>
 vmap > >gv
 vmap < <gv
 
+vmap > >gv
+vmap < <gv
+
 " ----------------------------------------------------------------------------
 "  Auto Commands
 " ----------------------------------------------------------------------------
@@ -220,14 +222,6 @@ au FileType make  set noexpandtab
 
 au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
 let g:is_bash = 1
-
-" ---------------------------------------------------------------------------
-"  Misc mappings
-" ---------------------------------------------------------------------------
-
-map <leader>f :tabnew <cfile><CR>
-map <leader>d :e %:h/<CR>
-map <leader>dt :tabnew %:h/<CR>
 
 " ---------------------------------------------------------------------------
 "  Open URL on current line in browser
@@ -444,9 +438,15 @@ elseif has("unix")
   noremap <leader>] <C-]>
   map <C-]> >
 
+  "nmap <silent> <C-t> :CommandT<CR>
+  "let g:CommandTMaxHeight=5
+
+
 endif
 
 " Store g:github_user and g:github_token in here
 if filereadable(expand("~/.vimrc.local"))
   source ~/.vimrc.local
 endif
+
+command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
