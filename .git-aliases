@@ -63,3 +63,5 @@ alias gds='git diff --stat'
 alias ghard='git reset --hard'
 alias gsoft='git reset --soft'
 alias gscrap='git checkout HEAD'
+
+alias commit='git commit'
