@@ -7,7 +7,7 @@ feh --bg-scale ~/pics/background.png &
 # Start programs
 urxvtd -q -o -f &
 xbindkeys &
-xbacklight -set 100 &
+xbacklight -set 0 &
 xmodmap ~/.Xmodmap &
 #unclutter &
 amixer set Master 80% &
@@ -15,6 +15,7 @@ prowler &
 bitlbee -D
 #synergyc -- 192.168.0.15
 dropboxd &
+touchpad &
 
 #conky | while read -r; do xsetroot -name "$REPLY"; done &
 #/home/scheibo/dxconky &
