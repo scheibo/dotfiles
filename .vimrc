@@ -339,22 +339,12 @@ hi link javaScript Normal
 " Plugins
 " ---------------------------------------------------------------------------
 
-nnoremap <silent> <F1> :NERDTreeToggle<CR>
 nnoremap <silent> <F2> :TlistToggle<CR>
-
-let NERDTreeWinSize=32
-let Tlist_Exit_OnlyWindow = 1
 
 " nerdcommenter
 " ,/ to invert comment on the current line/selection
 nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
-
-" Enable syntastic syntax checking
-"let g:syntastic_enable_signs=1
-"let g:syntastic_quiet_warnings=1
-let g:syntastic_stl_format = '<%E{E:%e - %feL}%B{, }%W{W:%w - %fwL}> '
-set statusline=%<%f\ %h%m%r%=%{SyntasticStatuslineFlag()}%-14.(%l,%c%V%)\ %P
 
 " gist-vim defaults
 if has("mac")
@@ -388,8 +378,6 @@ vnoremap <BS> d
 noremap <leader>t <C-t>
 
 if has("mac")
-  let NERDTreeWinPos="right"
-
    " Copy and Paste already work fine
 
   " Command-/ to toggle comments
@@ -442,11 +430,6 @@ elseif has("unix")
   "let g:CommandTMaxHeight=5
 
 
-endif
-
-" Store g:github_user and g:github_token in here
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
 endif
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
