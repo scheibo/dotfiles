@@ -12,7 +12,6 @@ test -r /etc/bashrc &&
 set -o notify
 
 set -o emacs
-#set -o noclobber
 set -o physical
 set -o ignoreeof
 
@@ -113,7 +112,6 @@ if [ "$UNAME" = Darwin ]; then
     export CLICOLOR=1
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
-    #source ~/.hg_bash_completion
     export GEMEDITOR=mate
 
     # put ports on the paths if /opt/local exists

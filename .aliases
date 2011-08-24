@@ -2,14 +2,6 @@
 
 LS_COMMON="-hBG"
 
-ghurl() {
-  repo="$(basename "`git rev-parse --show-toplevel`")"
-  if [ "$repo" = "core" ]; then
-    repo="postrank-core"
-  fi
-  echo "https://github.com/postrank/$repo/commit/$(git show -s --format=format:%H $1)" | pbcopy | pbpaste;
-}
-
 dircolors="$(type -P gdircolors dircolors | head -1)"
 test -n "$dircolors" && {
     COLORS=/etc/DIR_COLORS
@@ -162,7 +154,7 @@ alias rails2='rails _2.3.8_'
 alias wget='wget --no-check-certificate'
 alias sbashrc='source ~/.bashrc'
 alias ps2pdf='ps2pdf -sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true'
+alias root='cd $(git rev-parse --show-toplevel)'
 
 [[ -s '.git-aliases' ]] && source '.git-aliases'
 
-alias root='cd $(git rev-parse --show-toplevel)'
