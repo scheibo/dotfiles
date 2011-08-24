@@ -164,3 +164,5 @@ alias sbashrc='source ~/.bashrc'
 alias ps2pdf='ps2pdf -sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true'
 
 [[ -s '.git-aliases' ]] && source '.git-aliases'
+
+alias root='cd $(git rev-parse --show-toplevel)'
