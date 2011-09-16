@@ -25,16 +25,6 @@ push_ssh_cert() {
     done
 }
 
-prman() { man -t $1 | psnup -2 | lpr; }
-
-repeat() {
-    local i max
-    max=$1; shift;
-    for ((i=1; i <= max ; i++)); do
-        eval "$@";
-    done
-}
-
 extract() {
      if [ -f $1 ] ; then
          case $1 in
@@ -65,6 +55,9 @@ goto() { [[ -d "$1" ]] && cd "$1" || cd "$(dirname "$1")"; }
 cpf() { cp "$@" && goto "$_"; }
 mvf() { mv "$@" && goto "$_"; }
 
+gg() { grep --exclude-dir="\.git" --exclude-dir="vendor" -R -e "$1" .; }
+ff() { find . -regex ".*/${*}[^/]*"; }
+
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
 #   eval "`dircolors -b`"
@@ -88,8 +81,6 @@ alias lsa='ls -A'
 alias sd='sudo shutdown -h now'
 alias gcc99='gcc -std=c99 -O -Wall'
 alias crun='valgrind --leak-check=yes ./a.out'
-alias status='pwd && ls'
-alias s='clear && status'
 alias g='git'
 
 alias pacman='sudo pacman'
@@ -100,10 +91,7 @@ alias psearch='pacman -Ss'
 alias xs='cd'
 alias vf='cd'
 alias cd..='cd ..'
-alias more='less'
-
-alias moer='more'
-alias moew='more'
+alias unmount='umount'
 alias kk='ll'
 alias ks='ls'
 alias LS='ls'
@@ -117,20 +105,11 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias dc='cd -'
 
-alias cp='cp -i'
-alias mv='mv -i'
 alias mkdir='mkdir -p'
-alias mcd='mount /mnt/cdrom'
-alias ucd='umount /mnt/cdrom'
-alias mc='mc -c'
-alias mnt='mount'
-alias unmount='umount'
 alias clean='rm -rf compiled \#* *~ .*~ *.bak .*.bak *.tmp .*.tmp core a.out *.gch *.hi'
 alias wipe='rm -rf compiled \#* *~ .*~ *.bak .*.bak *.o *.d *.tmp .*.tmp core *.out* *.gch *.hi'
 alias texclean='rm -f *.toc *.aux *.log *.cp *.fn *.tp *.vr *.pg *.ky'
 alias h='history'
-alias pu='pushd'
-alias po='popd'
 alias tgz='tar -cvvzf'
 alias tbz2='tar -cvvjf'
 alias utgz='tar -xvvzf'
@@ -139,8 +118,6 @@ alias mktar='tar -cvvf'
 alias untar='tar -xvvf'
 alias c='clear'
 alias hc='history -c'
-alias hcx='hc;x'
-alias psa='ps aux'
 alias du1='du -h --max-depth=1'
 alias fn='find . -name'
 

@@ -1,11 +1,11 @@
 # http://blog.nicksieger.com/articles/2006/04/23/tweaking-irb
 ARGV.concat ["--readline", "--prompt-mode", "simple"]
 
+require 'rubygems'
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'pp'
 require 'hirb'
-require 'interactive_editor'
 require 'yaml'
 
 IRB.conf[:SAVE_HISTORY] = 500
