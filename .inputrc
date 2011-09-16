@@ -62,4 +62,3 @@ $if mode=emacs
 "\e[F": end-of-line
 
 $endif
-

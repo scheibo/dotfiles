@@ -7,12 +7,11 @@
 : ${INPUTRC=~/.inputrc}
 
 test -r /etc/bashrc &&
-      . /etc/bashrc
+      source /etc/bashrc
 
 set -o notify
 
 set -o emacs
-#set -o noclobber
 set -o physical
 set -o ignoreeof
 
@@ -46,7 +45,6 @@ unset MAILCHECK
 ulimit -S -c 0
 
 umask 0027   # -rwxr-x---
-#umask 0077  # -rw------
 
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 PATH="/usr/local/bin:$PATH"
@@ -106,14 +104,13 @@ if [ "$UNAME" = Darwin ]; then
 
     # enable programmable completion features
     if [ -f `brew --prefix`/etc/bash_completion ]; then
-      . `brew --prefix`/etc/bash_completion
+      source `brew --prefix`/etc/bash_completion
     fi
 
     # enable colors on a mac
     export CLICOLOR=1
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
-    #source ~/.hg_bash_completion
     export GEMEDITOR=mate
 
     # put ports on the paths if /opt/local exists
@@ -137,7 +134,7 @@ if [ "$UNAME" = Darwin ]; then
     export JRUBY_HOME
 
     export NODE_PATH=/usr/local/lib/node
-else
+else # Linux
   if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
       startx
   fi
@@ -145,7 +142,7 @@ fi
 
 # source ~/.shenv now if it exists
 test -r ~/.shenv &&
-. ~/.shenv
+source ~/.shenv
 
 puniq () {
     echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
@@ -157,25 +154,18 @@ PATH=$(puniq $PATH)
 MANPATH=$(puniq $MANPATH)
 
 # set up directory bookmarking (cdable_vars needs to be enabled)
-if [ ! -f ~/.dirs ]; then
-    touch ~/.dirs
-fi
+[[ ! -f ~/.dirs ]] && touch ~/.dirs
 alias show='cat ~/.dirs'
 save (){
     command sed "/!$/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ;
 }
 source ~/.dirs
 
-if [ -f ~/.aliases ]; then
-    . ~/.aliases
-fi
-
+[[ -s ~/.aliases ]] && source ~/.aliases
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 export BINPATH=~/Code
 
-if [ -t 0 ]; then
-    stty -ixon
-fi
+[[ -t 0 ]] && stty -ixon
 
 set -o history
