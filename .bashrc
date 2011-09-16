@@ -175,6 +175,8 @@ fi
 
 export BINPATH=~
 
+export PATH="$HOME/src/sys161/bin:$HOME/src/sys161/tools/bin:$PATH"
+
 if [ -t 0 ]; then
     stty -ixon
 fi

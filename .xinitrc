@@ -17,6 +17,9 @@ bitlbee -D
 dropboxd &
 #touchpad &
 
+xset +fp /usr/share/fonts/local
+xset fp rehash
+
 #conky | while read -r; do xsetroot -name "$REPLY"; done &
 #/home/scheibo/dxconky &
 #exec dwm
