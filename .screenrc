@@ -25,11 +25,10 @@ terminfo rxvt* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 hardstatus on
 hardstatus message 'screen: %-Lw(%n*%f %t)%+Lw'
 
-screen -t term 1 bash
-#screen -t irc 3 irssi
-#screen -t tor 4 rtorrent
-screen -t mpd 2 ncmpcpp
-screen -t top 3 htop
+screen -t server 1 bash
+screen -t git-sh 2 bash
+screen -t console 3 bash
+screen -t term 4 bash
 select 2
 
 # keybinding
@@ -60,3 +59,6 @@ bind s select bash
 termcapinfo rxvt-unicode ti@:te@
 # make colors work
 termcapinfo rxvt-unicode 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+
+
+

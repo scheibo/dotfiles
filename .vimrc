@@ -267,7 +267,7 @@ au BufRead,BufNewFile *.ronn       set ft=mkd tw=80 ts=2 sw=2 expandtab
 
 au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
-au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
+"au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python    set tw=79  ts=4

@@ -5,7 +5,7 @@ require 'rubygems'
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'pp'
-require 'hirb'
+#require 'hirb'
 require 'yaml'
 
 IRB.conf[:SAVE_HISTORY] = 500
@@ -43,4 +43,4 @@ def r
   reload!
 end
 
-Hirb::View.enable
+#Hirb::View.enable
