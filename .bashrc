@@ -163,6 +163,7 @@ source ~/.dirs
 
 [[ -s ~/.aliases ]] && source ~/.aliases
 
+export CC=gcc-4.2
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 export BINPATH=~/Code
