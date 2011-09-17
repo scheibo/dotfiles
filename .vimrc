@@ -169,7 +169,6 @@ function MapToggle(key, opt)
 endfunction
 command -nargs=+ MapToggle call MapToggle(<f-args>)
 
-" F1 is NERDTree
 " F2 is CTags
 MapToggle <F3> number
 MapToggle <F4> spell
@@ -177,7 +176,6 @@ MapToggle <F5> list
 MapToggle <F6> hlsearch
 MapToggle <F7> paste
 MapToggle <F8> wrap
-" F9 is strip white space
 
 "swap functionality
 nnoremap ' `
@@ -200,10 +198,10 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
                          \ exe "normal g'\"" | endif
 
 " don't use cindent for javascript
-autocmd FileType javascript setlocal nocindent
+au FileType javascript setlocal nocindent
 
 " strip whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
+au BufWritePre * :%s/\s\+$//e
 
 au FileType scheme map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
 
@@ -222,29 +220,6 @@ au FileType make  set noexpandtab
 
 au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
 let g:is_bash = 1
-
-" ---------------------------------------------------------------------------
-"  Open URL on current line in browser
-" ---------------------------------------------------------------------------
-
-function! Browser ()
-    let line0 = getline (".")
-    let line = matchstr (line0, "http[^ )]*")
-    let line = escape (line, "#?&;|%")
-    exec ':silent !open ' . "\"" . line . "\""
-endfunction
-map <leader>w :call Browser ()<CR>
-
-" ---------------------------------------------------------------------------
-"  Strip all trailing whitespace in file
-" ---------------------------------------------------------------------------
-
-function! StripWhitespace ()
-    exec ':%s/ \+$//gc'
-endfunction
-map <leader>s :call StripWhitespace ()<CR>
-
-nnoremap <silent> <F9> :let _s=@/<bar>:%s/\s\+$//e<bar>:let @/=_s<bar>:nohl<CR>
 
 " ---------------------------------------------------------------------------
 " astrails bonuses
@@ -346,15 +321,6 @@ nnoremap <silent> <F2> :TlistToggle<CR>
 nmap <leader>/ :call NERDComment(0, "invert")<cr>
 vmap <leader>/ :call NERDComment(0, "invert")<cr>
 
-" gist-vim defaults
-if has("mac")
-  let g:gist_clip_command = 'pbcopy'
-elseif has("unix")
-  let g:gist_clip_command = 'xclip -selection clipboard'
-endif
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 1
-
 " Turn off jslint errors by default
 let g:JSLintHighlightErrorLine = 0
 
@@ -362,9 +328,6 @@ let g:JSLintHighlightErrorLine = 0
 if has("gui_macvim")
   let macvim_hig_shift_movement = 1
 endif
-
-" % to bounce from do to end etc.
-runtime! macros/matchit.vim
 
 " ---------------------------------------------------------------------------
 " OS Specific implementation of Windows/Texmate mode
@@ -378,7 +341,6 @@ vnoremap <BS> d
 noremap <leader>t <C-t>
 
 if has("mac")
-   " Copy and Paste already work fine
 
   " Command-/ to toggle comments
   map <D-/> <plug>NERDCommenterToggle<CR>
@@ -425,11 +387,6 @@ elseif has("unix")
   " we can't map <C-[> to the reverse since its used for ESC
   noremap <leader>] <C-]>
   map <C-]> >
-
-  "nmap <silent> <C-t> :CommandT<CR>
-  "let g:CommandTMaxHeight=5
-
-
 endif
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
