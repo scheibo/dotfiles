@@ -155,6 +155,9 @@ alias wget='wget --no-check-certificate'
 alias sbashrc='source ~/.bashrc'
 alias ps2pdf='ps2pdf -sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true'
 alias root='cd $(git rev-parse --show-toplevel)'
+alias lib='cd $(git rev-parse --show-toplevel)/lib/$(basename $(git rev-parse --show-toplevel))'
+alias ext='cd $(git rev-parse --show-toplevel)/ext/'
+alias bin='cd $(git rev-parse --show-toplevel)/bin'
 
 [[ -s '.git-aliases' ]] && source '.git-aliases'
 
