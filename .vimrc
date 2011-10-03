@@ -84,7 +84,7 @@ set showmatch
 set mat=5
 set incsearch
 set laststatus=2
-set ignorecase
+set smartcase
 set hlsearch
 set visualbell
 set vb t_vb=
