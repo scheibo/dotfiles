@@ -25,12 +25,9 @@ terminfo rxvt* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 hardstatus on
 hardstatus message 'screen: %-Lw(%n*%f %t)%+Lw'
 
-screen -t term 1 bash
-#screen -t irc 3 irssi
-#screen -t tor 4 rtorrent
-screen -t mpd 2 ncmpcpp
-screen -t top 3 htop
-select 2
+screen -t kernel 1 bash
+screen -t gdb 2 bash
+select 1
 
 # keybinding
 

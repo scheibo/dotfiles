@@ -98,7 +98,7 @@ export PAGER MANPAGER
 
 ACK_PAGER="$PAGER"
 
-[[ -s '.prompt' ]] && source '.prompt'
+[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 
 if [ "$UNAME" = Darwin ]; then
 
@@ -165,7 +165,7 @@ source ~/.dirs
 [[ -s ~/.aliases ]] && source ~/.aliases
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-export BINPATH=~/Code
+export BINPATH=~
 
 [[ -t 0 ]] && stty -ixon
 
