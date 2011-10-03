@@ -55,7 +55,13 @@ goto() { [[ -d "$1" ]] && cd "$1" || cd "$(dirname "$1")"; }
 cpf() { cp "$@" && goto "$_"; }
 mvf() { mv "$@" && goto "$_"; }
 
-gg() { grep --exclude-dir="\.git" --exclude-dir="vendor" -R -e "$1" .; }
+gg() {
+    if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
+        git grep $*
+    else
+        grep --exclude-dir="\.git" --exclude-dir="vendor" -R -e $* .
+    fi
+}
 ff() { find . -regex ".*/${*}[^/]*"; }
 
 # enable color support of ls and also add handy aliases
