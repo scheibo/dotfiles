@@ -137,5 +137,14 @@ alias spec='cd $(git rev-parse --show-toplevel)/spec'
 alias rbvalgrind='valgrind --partial-loads-ok=yes --undef-value-errors=no --num-callers=50 --error-limit=no ruby'
 alias rbgdb='gdb --args ruby'
 
+alias root='cd $(git rev-parse --show-toplevel)'
+alias lib='cd $(git rev-parse --show-toplevel)/lib/$(basename $(git rev-parse --show-toplevel))'
+alias ext='cd $(git rev-parse --show-toplevel)/ext/'
+alias bin='cd $(git rev-parse --show-toplevel)/bin'
+alias spec='cd $(git rev-parse --show-toplevel)/spec'
+
+alias rbvalgrind='valgrind --partial-loads-ok=yes --undef-value-errors=no --num-callers=50 --error-limit=no ruby'
+alias rbgdb='gdb --args ruby'
+
 [[ -s '.git-aliases' ]] && source '.git-aliases'
 
