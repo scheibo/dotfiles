@@ -59,10 +59,21 @@ gg() {
     if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
         git grep "$*"
     else
-        grep --exclude-dir="\.git" --exclude-dir="vendor" -R -e "$*" .
+        grep --exclude="\.hg" --exclude="vendor" -R -e "$*" .
     fi
 }
+ggl() {
+    if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
+        git grep -l "$*"
+    else
+        grep --exclude="\.hg" --exclude="vendor" -R -e -l "$*" .
+    fi
+}
+hh() { file=$(ggl $* | menu); vim $file; }
+vu() { vim -c ":G $*"; }
+
 ff() { find . -regex ".*/${*}[^/]*"; }
+dd() { file=$(ff $* | menu); vim $file; }
 
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
