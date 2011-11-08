@@ -59,7 +59,7 @@ gg() {
     if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
         git grep "$*"
     else
-        grep --exclude-dir="\.git" --exclude-dir="vendor" -R -e "$*" .
+        grep --exclude="\.git" --exclude="vendor" -R -e "$*" .
     fi
 }
 ff() { find . -regex ".*/${*}[^/]*"; }

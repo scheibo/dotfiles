@@ -201,7 +201,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
 au FileType javascript setlocal nocindent
 
 " strip whitespace on save
-au BufWritePre * :%s/\s\+$//e
+"au BufWritePre * :%s/\s\+$//e
 
 au FileType scheme map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
 
@@ -271,6 +271,9 @@ au Filetype ruby      set tw=80  ts=2
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python    set tw=79  ts=4
+
+" for school
+au FileType c set tw=80 ts=2 sw=2 noexpandtab
 
 " ---------------------------------------------------------------------------
 " File Type Syntax Highlighting
