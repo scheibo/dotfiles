@@ -59,14 +59,14 @@ gg() {
     if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
         git grep "$*"
     else
-        grep --exclude="\.git" --exclude="vendor" -R -e "$*" .
+        grep --exclude="\.git" --exclude="\.hg" --exclude="vendor" -R -e "$*" .
     fi
 }
 ggl() {
     if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
         git grep -l "$*"
     else
-        grep --exclude="\.hg" --exclude="vendor" -R -e -l "$*" .
+        grep --exclude="\.git" --exclude="\.hg" --exclude="vendor" -R -e -l "$*" .
     fi
 }
 hh() { file=$(ggl $* | menu); vim $file; }
