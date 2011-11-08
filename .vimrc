@@ -151,6 +151,7 @@ nnoremap q? <Nop>
 
 " fix the accident of typing Q instead of q!
 cnoremap Q q
+cnoremap qq qa
 
 " quicker window navigation
 nnoremap <C-j> <C-w>j
