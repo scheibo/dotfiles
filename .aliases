@@ -69,7 +69,7 @@ ggl() {
         grep --exclude="\.hg" --exclude="vendor" -R -e -l "$*" .
     fi
 }
-hh() { file=$(ggl $* | menu); vim $file; }
+hh() { file=$(ggl $* | menu); vim -c "/${*}" $file; }
 vu() { vim -c ":G $*"; }
 
 ff() { find . -regex ".*/${*}[^/]*"; }
