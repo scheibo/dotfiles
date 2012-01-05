@@ -98,7 +98,7 @@ export PAGER MANPAGER
 
 ACK_PAGER="$PAGER"
 
-[[ -s '.prompt' ]] && source '.prompt'
+[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 
 if [ "$UNAME" = Darwin ]; then
 
@@ -168,5 +168,8 @@ source ~/.dirs
 export BINPATH=~/Code
 
 [[ -t 0 ]] && stty -ixon
+
+export P4CONFIG=.p4config
+export P4EDITOR=$EDITOR
 
 set -o history

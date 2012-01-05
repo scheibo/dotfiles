@@ -41,6 +41,25 @@ endif
 syntax on
 filetype plugin indent on
 
+"---- Google
+source /usr/share/vim/google/google.vim
+source /home/build/nonconf/google3/tools/tags/gtags.vim
+set cb="exclude:.*"
+
+function! HighlightTooLongLines()
+  highlight def link RightMargin Error
+  if &textwidth != 0
+    exec ('match RightMargin /\%<' . (&textwidth + 3) . 'v.\%>' . (&textwidth + 1) . 'v/')
+  endif
+endfunction
+
+augroup filetypedetect
+au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
+augroup END
+
+:au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+"----
+
 set t_Co=256
 
 "if has("gui_running")
