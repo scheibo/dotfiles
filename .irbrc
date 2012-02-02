@@ -8,6 +8,9 @@ require 'pp'
 #require 'hirb'
 require 'yaml'
 
+require 'open-uri'
+require 'nokogiri'
+
 IRB.conf[:SAVE_HISTORY] = 500
 IRB.conf[:HISTORY_FILE] = File.expand_path('~/.irb_history')
 IRB.conf[:AUTO_INDENT]=true
