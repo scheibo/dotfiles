@@ -8,7 +8,7 @@ set cf               " error files / jumping
 set ffs=unix,dos,mac " support these files
 set isk+=_,$,@,%,#,- " none word dividers
 set viminfo='1000,f1,:100,@100,/20
-set modeline         " make sure modeline support is enabled
+set modeline
 set autoread
 set tabpagemax=50
 set hidden
@@ -28,12 +28,6 @@ set lcs+=trail:· " show trailing spaces
 
 set notitle
 
-" set the window title in screen
-if $STY != ""
-    set t_ts=k
-    set t_fs=\
-endif
-
 " ---------------------------------------------------------------------------
 " Colors / Theme
 " ---------------------------------------------------------------------------
@@ -42,12 +36,7 @@ syntax on
 filetype plugin indent on
 
 set t_Co=256
-
-"if has("gui_running")
-  "colorscheme railscasts
-"else
-  colorscheme darktango
-"endif
+colorscheme darktango
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -103,17 +92,11 @@ set expandtab
 set nosmarttab
 set smarttab
 set formatoptions+=n       " support for numbered/bullet lists
-"set textwidth=80           " wrap at 80 chars by default
 set virtualedit=block
 
 " ----------------------------------------------------------------------------
 "  Mappings
 " ----------------------------------------------------------------------------
-
-"inoremap <Left>  <NOP>
-"inoremap <Right> <NOP>
-"inoremap <Up>    <NOP>
-"inoremap <Down>  <NOP>
 
 " remap <LEADER> to ',' (instead of '\')
 let mapleader = ","
@@ -190,6 +173,12 @@ vmap < <gv
 vmap > >gv
 vmap < <gv
 
+"make Y consistent with C and D
+nnoremap Y y$
+
+" Ctrl-N to disable search match highlight
+nmap <silent> <C-n> :silent noh<CR>
+
 " ----------------------------------------------------------------------------
 "  Auto Commands
 " ----------------------------------------------------------------------------
@@ -202,9 +191,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
 au FileType javascript setlocal nocindent
 
 " strip whitespace on save
-"au BufWritePre * :%s/\s\+$//e
-
-au FileType scheme map ,rd :execute "!raco docs ".shellescape(expand("<cword>"),1)<CR><CR>
+au BufWritePre * :%s/\s\+$//e
 
 function ModeChange()
   if getline(1) =~ "^#!.*/bin/*"
@@ -214,29 +201,6 @@ endfunction
 au BufWritePost * call ModeChange()
 
 au FileType make  set noexpandtab
-
-" ---------------------------------------------------------------------------
-"  sh config
-" ---------------------------------------------------------------------------
-
-au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
-let g:is_bash = 1
-
-" ---------------------------------------------------------------------------
-" astrails bonuses
-" ---------------------------------------------------------------------------
-
-"make Y consistent with C and D
-nnoremap Y y$
-
-" <s>Ctrl-E</s><b>,b</b> to switch between 2 last buffers
-nmap <leader>b :b#<CR>
-
-" ,e to fast finding files. just type beginning of a name and hit TAB
-nmap <leader>e :e **/
-
-" Ctrl-N to disable search match highlight
-nmap <silent> <C-n> :silent noh<CR>
 
 " ---------------------------------------------------------------------------
 " File Types
@@ -253,7 +217,7 @@ function s:setupMarkup()
   map <buffer> <leader>pr :Mm <CR>
 endfunction
 
-au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru}    set ft=ruby
+au BufRead,BufNewFile {Gemfile,Rakefile,Vagrantfile,Thorfile,config.ru} set ft=ruby
 
 au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn} call s:setupMarkup()
 au BufRead,BufNewFile *.txt call s:setupWrapping()
@@ -268,13 +232,15 @@ au BufRead,BufNewFile *.ronn       set ft=mkd tw=80 ts=2 sw=2 expandtab
 
 au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
-"au Filetype html,xml,xsl,rhtml source $HOME/.vim/scripts/closetag.vim
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
 au FileType python    set tw=79  ts=4
 
 " for school
-au FileType c set tw=80 ts=2 sw=2 noexpandtab
+" au FileType c set tw=80 ts=2 sw=2 noexpandtab
+
+au Filetype sh,bash set ts=4 sts=4 sw=4 expandtab
+let g:is_bash = 1
 
 " ---------------------------------------------------------------------------
 " File Type Syntax Highlighting
@@ -315,80 +281,17 @@ hi link javaScriptFunction Keyword
 hi link javaScript Normal
 
 " ---------------------------------------------------------------------------
-" Plugins
+" Misc
 " ---------------------------------------------------------------------------
 
-nnoremap <silent> <F2> :TlistToggle<CR>
-
-" nerdcommenter
-" ,/ to invert comment on the current line/selection
-nmap <leader>/ :call NERDComment(0, "invert")<cr>
-vmap <leader>/ :call NERDComment(0, "invert")<cr>
-
-" Turn off jslint errors by default
-let g:JSLintHighlightErrorLine = 0
-
-" MacVIM shift+arrow-keys behavior (required in .vimrc)
-if has("gui_macvim")
-  let macvim_hig_shift_movement = 1
-endif
-
-" ---------------------------------------------------------------------------
-" OS Specific implementation of Windows/Texmate mode
-" ---------------------------------------------------------------------------
-
-" Use CTRL-Q to do what CTRL-V used to do
-noremap <C-q> <C-v>
 " backspace in Visual mode deletes selection
 vnoremap <BS> d
 
-noremap <leader>t <C-t>
+noremap <C-s>  :update<CR>
+vnoremap <C-s> <C-c>:update<CR>
+imap <C-s> <ESC><C-s>
 
-if has("mac")
-
-  " Command-/ to toggle comments
-  map <D-/> <plug>NERDCommenterToggle<CR>
-
-  " Command-][ to increase/decrease indentation
-  vmap <D-]> >gv
-  vmap <D-[> <gv
-
-  let $PATH = $HOME .
-    \ '/usr/local/bin:/usr/local/sbin:' .
-    \ '/usr/pkg/bin:' .
-    \ '/opt/local/bin:/opt/local/sbin:' .
-    \ $PATH
-
-elseif has("unix")
-  let Tlist_Use_Right_Window = 1
-
-  map <silent> <leader>c :w !xsel -i -b<CR><CR>
-  function! XClipboardPaste ()
-      exec ':set paste'
-      exec ':r !xsel -b'
-      exec ':set nopaste'
-  endfunction
-  map <silent> <leader>p :call XClipboardPaste ()<CR>
-
-  " Abbreviated windows mode
-  vnoremap <C-x> d
-  vnoremap <S-Del> d
-  vnoremap <C-c> y
-  vnoremap <C-Insert> y
-  map <C-v> p
-  map <S-Insert> p
-  noremap <C-y> <C-r>
-  inoremap <C-y> <C-o><C-r>
-  noremap <C-s>  :update<CR>
-  vnoremap <C-s> <C-c>:update<CR>
-  imap <C-s> <ESC><C-s>
-
-  " can't map <C-/>, however, '/' sends an '_' so we can be sneaky
-  map <C-_> <plug>NERDCommenterToggle<CR>
-
-  " we can't map <C-[> to the reverse since its used for ESC
-  noremap <leader>] <C-]>
-  map <C-]> >
-endif
+" can't map <C-/>, however, '/' sends an '_' so we can be sneaky
+map <C-_> <plug>NERDCommenterToggle<CR>
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'

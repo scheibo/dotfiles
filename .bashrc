@@ -6,14 +6,12 @@
 : ${HOSTFILE=~/.ssh/known_hosts}
 : ${INPUTRC=~/.inputrc}
 
-test -r /etc/bashrc &&
-      source /etc/bashrc
+test -r /etc/bashrc && source /etc/bashrc
 
 set -o notify
-
 set -o emacs
 set -o physical
-set -o ignoreeof
+set -o ignoreeof # Ctrl+D doesn't exist
 
 # http://ss64.com/bash/shopt.html
 shopt -s cdable_vars >/dev/null 2>&1
@@ -104,7 +102,6 @@ ACK_PAGER="$PAGER"
 [[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 
 if [ "$UNAME" = Darwin ]; then
-
     # enable programmable completion features
     if [ -f `brew --prefix`/etc/bash_completion ]; then
       source `brew --prefix`/etc/bash_completion
@@ -143,9 +140,7 @@ else # Linux
   fi
 fi
 
-# source ~/.shenv now if it exists
-test -r ~/.shenv &&
-source ~/.shenv
+[[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
 
 puniq () {
     echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
@@ -164,8 +159,7 @@ save (){
 }
 source ~/.dirs
 
-[[ -s ~/.aliases ]] && source ~/.aliases
-
+[[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 export BINPATH=~/Code
