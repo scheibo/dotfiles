@@ -148,4 +148,7 @@ alias spec='cd $(git rev-parse --show-toplevel)/spec'
 alias rbvalgrind='valgrind --partial-loads-ok=yes --undef-value-errors=no --num-callers=50 --error-limit=no ruby'
 alias rbgdb='gdb --args ruby'
 
+alias tmux="TERM=screen-256color-bce tmux"
+alias vim="vim -O"
+
 [[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"
