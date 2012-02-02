@@ -14,16 +14,16 @@ download_rate = 8500
 upload_rate = 500
 
 # Default directory to save the downloaded torrents.
-directory = "/home/scheibo/dls"
+directory = "/Users/kjs/Downloads"
 
 # Default session directory. Make sure you don't run multiple instance
 # of rtorrent using the same session directory. Perhaps using a
 # relative path?
-#session = "/home/scheibo/dls/.torrents/.session"
+#session = "/Users/kjs/Downloads/.torrents/.session"
 
 # Watch a directory for new torrents, and stop those that have been
 # deleted.
-schedule = watch_directory,5,5,load_start=/home/scheibo/dls/.torrents/*.torrent
+schedule = watch_directory,5,5,load_start=/Users/kjs/Downloads/.torrents/*.torrent
 schedule = untied_directory,5,5,stop_untied=
 schedule = tied_directory,5,5,start_tied=
 # */
