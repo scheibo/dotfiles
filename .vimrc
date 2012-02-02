@@ -377,8 +377,6 @@ elseif has("unix")
   vnoremap <C-Insert> y
   map <C-v> p
   map <S-Insert> p
-  noremap <C-z> u
-  inoremap <C-z> <C-o>u
   noremap <C-y> <C-r>
   inoremap <C-y> <C-o><C-r>
   noremap <C-s>  :update<CR>

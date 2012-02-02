@@ -44,6 +44,9 @@ unset MAILCHECK
 # disable core dumps
 ulimit -S -c 0
 
+# allow more open files
+ulimit -n 4096
+
 umask 0027   # -rwxr-x---
 
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
@@ -98,7 +101,7 @@ export PAGER MANPAGER
 
 ACK_PAGER="$PAGER"
 
-[[ -s '.prompt' ]] && source '.prompt'
+[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 
 if [ "$UNAME" = Darwin ]; then
 
