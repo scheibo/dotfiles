@@ -40,7 +40,7 @@ hi Structure                     guifg=#729FCF               ctermfg=12   cterm=
 hi ToDo                          guifg=#F57900  guibg=NONE   ctermfg=208  cterm=bold  ctermbg=none
 hi Identifier                    guifg=#0B939B               ctermfg=6    cterm=none
 hi Ignore                        guifg=#005f00               ctermfg=23   cterm=none
-hi MatchParen     guibg=#2E3436  guifg=#D3D7CF  ctermbg=0    ctermfg=7    cterm=none
+hi MatchParen     guibg=#555753  guifg=#EEEEEC  ctermbg=8    ctermfg=15   cterm=none
 hi Operator                      guifg=#8AE234               ctermfg=10   cterm=none
 hi Type                          guifg=#3465A4               ctermfg=4    cterm=none
 
@@ -89,6 +89,10 @@ hi VisualNOS      guibg=#2E3436  guifg=#D3D7CF  ctermbg=0    ctermfg=7    cterm=
 hi Search         guibg=#FCE94F  guifg=#2E3436  ctermbg=11   ctermfg=0    cterm=none
 hi IncSearch      guibg=#FCE94F  guifg=#2E3436  ctermbg=11   ctermfg=0    cterm=none
 
+" *** Menu *** "
+hi Pmenu          guibg=#555753  guifg=#D3D7CF  ctermfg=7   ctermbg=8     cterm=none
+hi PmenuSel       guibg=#888a85  guifg=#EEEEEC
+hi PmenuSbar      guibg=#babdb6
 
 " ********* Language Specific ********* "
 

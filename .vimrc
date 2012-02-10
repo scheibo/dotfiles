@@ -15,7 +15,8 @@ set hidden
 set mouse=a
 set backspace=indent,eol,start
 set autowrite
-set completeopt=longest
+set completeopt=longest,menu
+set pumheight=10
 set laststatus=2
 set nomousehide
 set shortmess+=r
@@ -49,7 +50,7 @@ set cb="exclude:.*"
 function! HighlightTooLongLines()
   highlight def link RightMargin Error
   if &textwidth != 0
-    exec ('match RightMargin /\%<' . (&textwidth + 3) . 'v.\%>' . (&textwidth + 1) . 'v/')
+    exec ('match RightMargin /\%>' . &textwidth . 'v.\+/')
   endif
 endfunction
 
@@ -62,11 +63,19 @@ augroup END
 
 set t_Co=256
 
-"if has("gui_running")
-  "colorscheme railscasts
-"else
-  colorscheme darktango
-"endif
+colorscheme darktango
+
+" ---------------------------------------------------------------------------
+" Completion
+" ---------------------------------------------------------------------------
+
+set ofu=syntaxcomplete#Complete
+
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -352,6 +361,11 @@ if has("gui_macvim")
   let macvim_hig_shift_movement = 1
 endif
 
+let g:fuf_dirs_exclude='\v(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
+let g:fuf_file_exclude='\v\~$|\.(o|exe|dll|bak|sw[po])$|(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
+
+nnoremap <C-t> :set nopaste<cr>:FufFile **/<cr>
+
 " ---------------------------------------------------------------------------
 " OS Specific implementation of Windows/Texmate mode
 " ---------------------------------------------------------------------------
@@ -396,8 +410,6 @@ elseif has("unix")
   vnoremap <C-Insert> y
   map <C-v> p
   map <S-Insert> p
-  noremap <C-z> u
-  inoremap <C-z> <C-o>u
   noremap <C-y> <C-r>
   inoremap <C-y> <C-o><C-r>
   noremap <C-s>  :update<CR>

@@ -1,0 +1,5 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =3
+let g:netrw_dirhist_1='/usr/local/google/home/kjs/galaxy/google3/java/com/google/analytics/galaxy/app/web/ui/component/filterableinput'
+let g:netrw_dirhist_2='/usr/local/google/home/kjs/galaxy/google3/java/com/google/analytics/galaxy/app/web/report/server/plugins/social/ui/component/socialsource'
+let g:netrw_dirhist_3='/usr/local/google/home/kjs/galaxy/google3/java/com/google/analytics/galaxy/common/ui/component/pivottable'
