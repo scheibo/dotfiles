@@ -100,6 +100,7 @@ set mat=5
 set incsearch
 set laststatus=2
 set ignorecase
+set smartcase
 set hlsearch
 set visualbell
 set vb t_vb=
@@ -190,8 +191,6 @@ MapToggle <F8> wrap
 "swap functionality
 nnoremap ' `
 nnoremap ` '
-
-vnoremap <C-w> :Align = <CR>
 
 vmap > >gv
 vmap < <gv
@@ -322,6 +321,8 @@ map <C-_> <plug>NERDCommenterToggle<CR>
 
 let g:fuf_dirs_exclude='\v(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
 let g:fuf_file_exclude='\v\~$|\.(o|exe|dll|bak|sw[po])$|(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
+
+let g:NumberToggleTrigger="<C-x>"
 
 nnoremap <C-t> :set nopaste<cr>:FufFile **/<cr>
 
