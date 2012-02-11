@@ -234,7 +234,7 @@ au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-au FileType python    set tw=79  ts=4
+au FileType python    set tw=79 ts=4 sw=4 expandtab
 
 " for school
 " au FileType c set tw=80 ts=2 sw=2 noexpandtab
