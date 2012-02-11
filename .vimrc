@@ -15,7 +15,8 @@ set hidden
 set mouse=a
 set backspace=indent,eol,start
 set autowrite
-set completeopt=longest
+set completeopt=longest,menu
+set pumheight=10
 set laststatus=2
 set nomousehide
 set shortmess+=r
@@ -37,6 +38,31 @@ filetype plugin indent on
 
 set t_Co=256
 colorscheme darktango
+
+function! HighlightTooLongLines()
+  highlight def link RightMargin Error
+  if &textwidth != 0
+    exec ('match RightMargin /\%>' . &textwidth . 'v.\+/')
+  endif
+endfunction
+
+augroup filetypedetect
+au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
+augroup END
+
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+
+" ---------------------------------------------------------------------------
+" Completion
+" ---------------------------------------------------------------------------
+
+set ofu=syntaxcomplete#Complete
+
+let OmniCpp_ShowAccess = 1
+let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
+let OmniCpp_MayCompleteDot = 1 " autocomplete after .
+let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
+let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -293,5 +319,10 @@ imap <C-s> <ESC><C-s>
 
 " can't map <C-/>, however, '/' sends an '_' so we can be sneaky
 map <C-_> <plug>NERDCommenterToggle<CR>
+
+let g:fuf_dirs_exclude='\v(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
+let g:fuf_file_exclude='\v\~$|\.(o|exe|dll|bak|sw[po])$|(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
+
+nnoremap <C-t> :set nopaste<cr>:FufFile **/<cr>
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
