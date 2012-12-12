@@ -7,27 +7,27 @@ git_branch() {
 git_colored_branch() {
   st="$(command git status 2>/dev/null)"
   if [[ "$st" =~  "working directory clean" ]]; then
-    echo "\[\033[0;37m\]$(git_branch)\[\e[0m\]"
+   echo "\[\033[0;37m\]$(git_branch)\[\e[0m\]"
   elif [[ "$st" =~  "Changes to be committed" ]]; then
-    echo "\[\033[0;33m\]$(git_branch)\[\e[0m\]"
+   echo "\[\033[0;33m\]$(git_branch)\[\e[0m\]"
   elif [[ "$st" =~  "Changes not staged" ]] || [[ "$st" =~  "Changed but not updated" ]]; then
-    echo "\[\033[0;32m\]$(git_branch)\[\e[0m\]"
+   echo "\[\033[0;32m\]$(git_branch)\[\e[0m\]"
   elif [[ "$st" =~  "Untracked files" ]]; then
-    echo "\[\033[0;36m\]$(git_branch)\[\e[0m\]"
+   echo "\[\033[0;36m\]$(git_branch)\[\e[0m\]"
   else
-    echo "\[\033[0;35m\]$(git_branch)\[\e[0m\]"
+   echo "\[\033[0;35m\]$(git_branch)\[\e[0m\]"
   fi
 }
 
 prompt_func() {
-  history -a # write history immediately
   if [[ $? = "0" ]]; then
     color="\[\033[1;32m\]"
   else
     color="\[\033[1;31m\]"
   fi
 
-  if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
+  dir="$(command git rev-parse --show-toplevel 2>/dev/null)"
+  if $(command git rev-parse &>/dev/null) && [[ "$dir" != "$HOME" ]] &&  [[ "$dir" != "/data/users/kjs/fbcode" ]] && [[ "$dir" != "/data/users/kjs/www-git" ]]; then
     PS1="\[\e[32;1m\]$color\u@\h\[\033[1;30m\]($(git_colored_branch)\[\033[1;30m\])$color$\[\e[0m\] "
   else
     PS1="\[\e[32;1m\]$color\u@\h$\[\e[37;0m\] "

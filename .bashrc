@@ -8,6 +8,11 @@
 
 test -r /etc/bashrc && source /etc/bashrc
 
+# Source Facebook definitions
+if [ -f /home/engshare/admin/scripts/master.bashrc ]; then
+    . /home/engshare/admin/scripts/master.bashrc
+fi
+
 set -o notify
 set -o emacs
 set -o physical
@@ -43,7 +48,7 @@ unset MAILCHECK
 ulimit -S -c 0
 
 # allow more open files
-ulimit -n 4096
+ulimit -n 65535
 
 umask 0027   # -rwxr-x---
 
@@ -51,6 +56,7 @@ PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 PATH="/usr/local/bin:$PATH"
 test -d "$HOME/bin" &&
 PATH="$HOME/bin:$PATH"
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 export PATH
 
 case "$-" in
@@ -125,10 +131,6 @@ if [ "$UNAME" = Darwin ]; then
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
         MANPATH="/usr/pkg/share/man:$MANPATH"
     }
-    JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
-    ANT_HOME="/Developer/Java/Ant"
-    export ANT_HOME JAVA_HOME
-
     test -d /opt/jruby &&
     JRUBY_HOME="/opt/jruby"
     export JRUBY_HOME
@@ -166,4 +168,27 @@ export BINPATH=~/Code
 
 [[ -t 0 ]] && stty -ixon
 
+source /home/$USER/.ssh-agent
+
+export CDPATH="$CDPATH:/data/users/kjs"
+
+alias hive_platinum='export HADOOP_HOME=/mnt/vol/hive/sites/platinum/hadoop; export HIVE_HOME=/mnt/vol/hive/sites/platinum/hive; /mnt/vol/hive/sites/platinum/hive/bin/hive'
+alias hive='export HADOOP_HOME=/mnt/vol/hive/sites/silver/hadoop; export HIVE_HOME=/mnt/vol/hive/sites/silver/hive; /mnt/vol/hive/sites/silver/hive/bin/hive -i /mnt/vol/hive/dis/lib/udf/hiverc'
+alias hive_silver='export HADOOP_HOME=/mnt/vol/hive/sites/silver/hadoop; export HIVE_HOME=/mnt/vol/hive/sites/silver/hive; /mnt/vol/hive/sites/silver/hive/bin/hive'
+
+alias test-ptms="/data/users/kjs/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/test-ptms.sh"
+alias test-ranges="/data/users/kjs/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/test-ranges.sh"
+alias test-jsonp="/data/users/kjs/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/test-jsonp.sh"
+alias loadtest="/data/users/kjs/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/loadtest.rb"
+
+#export http_proxy='http://172.31.255.99:8080'
+#export https_proxy="$http_proxy"
+#export no_proxy='.facebook.com,.tfbnw.net,fb.com,localhost'
+
+export JAVA_HOME=/usr/local/jdk-7u6-64
+export JDK_HOME=$JAVA_HOME
+export PATH=$PATH:$JAVA_HOME/bin
+export PTAIL_ROOT=/data/users/kjs/datafreeway/ptail
+
 set -o history
+

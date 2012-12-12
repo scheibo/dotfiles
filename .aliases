@@ -4,11 +4,11 @@ LS_COMMON="-hBG"
 
 dircolors="$(type -P gdircolors dircolors | head -1)"
 test -n "$dircolors" && {
-    COLORS=/etc/DIR_COLORS
-    test -e "/etc/DIR_COLORS.$TERM"   && COLORS="/etc/DIR_COLORS.$TERM"
-    test -e "$HOME/.dircolors"        && COLORS="$HOME/.dircolors"
-    test ! -e "$COLORS"               && COLORS=
-    eval `$dircolors --sh $COLORS`
+COLORS=/etc/DIR_COLORS
+test -e "/etc/DIR_COLORS.$TERM"   && COLORS="/etc/DIR_COLORS.$TERM"
+test -e "$HOME/.dircolors"        && COLORS="$HOME/.dircolors"
+test ! -e "$COLORS"               && COLORS=
+eval `$dircolors --sh $COLORS`
 }
 unset dircolors
 
@@ -26,24 +26,24 @@ push_ssh_cert() {
 }
 
 extract() {
-     if [ -f $1 ] ; then
-         case $1 in
-             *.tar.bz2)   tar xvjf $1     ;;
-             *.tar.gz)    tar xvzf $1     ;;
-             *.bz2)       bunzip2 $1      ;;
-             *.rar)       unrar x $1      ;;
-             *.gz)        gunzip $1       ;;
-             *.tar)       tar xvf $1      ;;
-             *.tbz2)      tar xvjf $1     ;;
-             *.tgz)       tar xvzf $1     ;;
-             *.zip)       unzip $1        ;;
-             *.Z)         uncompress $1   ;;
-             *.7z)        7z x $1         ;;
-             *)           echo "'$1' cannot be extracted via >extract<" ;;
-         esac
-     else
-         echo "'$1' is not a valid file"
-     fi
+    if [ -f $1 ] ; then
+        case $1 in
+            *.tar.bz2)   tar xvjf $1     ;;
+            *.tar.gz)    tar xvzf $1     ;;
+            *.bz2)       bunzip2 $1      ;;
+            *.rar)       unrar x $1      ;;
+            *.gz)        gunzip $1       ;;
+            *.tar)       tar xvf $1      ;;
+            *.tbz2)      tar xvjf $1     ;;
+            *.tgz)       tar xvzf $1     ;;
+            *.zip)       unzip $1        ;;
+            *.Z)         uncompress $1   ;;
+            *.7z)        7z x $1         ;;
+            *)           echo "'$1' cannot be extracted via >extract<" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
 }
 
 encrypt() { gpg -ao cipher.asc -esr $2 $1; }
@@ -77,7 +77,7 @@ dd() { file=$(ff $* | menu); vim $file; }
 
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
-#   eval "`dircolors -b`"
+    #   eval "`dircolors -b`"
     alias ls='ls --color=auto'
     alias dir='dir --color=auto'
     alias vdir='vdir --color=auto'
@@ -150,5 +150,22 @@ alias rbgdb='gdb --args ruby'
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias vim="vim -O"
+
+main() {
+    cd "./src/main/";
+    while [ "$(ls | wc -l)" -eq "1" ] && [ -d "$(ls)" ]; do
+        cd $(ls);
+    done
+}
+tests() {
+    cd "./src/test/";
+    while [ "$(ls | wc -l)" -eq "1" ] && [ -d "$(ls)" ]; do
+        cd $(ls);
+    done
+}
+
+alias pt='java -Xms128M -Xmx2048M -cp ~/local/datafreeway/ptail/ptail-cli/target/ptail-*-standalone.jar -Djava.library.path=/data/users/kjs/native com.facebook.datafreeway.ptail.PTailMain'
+alias fairy="java -jar /home/jaxlaw/repos/fairy/fairy-core/target/fairy-core-0.0.1-SNAPSHOT-jar-with-dependencies.jar"
+alias b='mvn clean install -DskipTests'
 
 [[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"
