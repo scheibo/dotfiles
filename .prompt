@@ -20,7 +20,6 @@ git_colored_branch() {
 }
 
 prompt_func() {
-  history -a # write history immediately
   if [[ $? = "0" ]]; then
     color="\[\033[1;32m\]"
   else

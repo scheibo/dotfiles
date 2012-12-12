@@ -75,6 +75,17 @@ vu() { vim -c ":G $*"; }
 ff() { find . -regex ".*/${*}[^/]*"; }
 dd() { file=$(ff $* | menu); vim $file; }
 
+function tunnel {
+  if [ $# -ne 2 ]; then
+    echo "Usage: tunnel <target_host> <target_port>"
+  else
+    echo "Establishing tunnel... Press Ctrl-C to kill"
+    target_host=$1
+    target_port=$2
+    ssh -L $target_port:$target_host:$target_port dev -N
+  fi
+}
+
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
 #   eval "`dircolors -b`"
@@ -150,5 +161,16 @@ alias rbgdb='gdb --args ruby'
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias vim="vim -O"
+
+alias test-ptms="/Users/kjs/Code/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/test-ptms.sh"
+alias test-ranges="/Users/kjs/Code/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/test-ranges.sh"
+alias test-jsonp="/Users/kjs/Code/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/test-jsonp.sh"
+alias loadtest="/Users/kjs/Code/datafreeway/ptail/ptail-metadata/ptail-metadata-service/scripts/loadtest.rb"
+
+alias push="rsync -acvz ~/Code/datafreeway/ptail --exclude 'log*' --exclude 'target/' --exclude '.idea' --exclude '*.iml' --exclude '.git' --exclude 'package/' dev:/data/users/kjs/datafreeway"
+alias pull="rsync -acvz dev:/data/users/kjs/datafreeway/ptail --exclude 'log*' --exclude 'target/' --exclude '.idea' --exclude '*.iml' --exclude '.git' --exclude 'package/' ~/Code/datafreeway"
+
+alias pusha="rsync -avz ~/Code/datafreeway --exclude 'log*' --exclude 'target/' --exclude '.idea' --exclude '*.iml' --exclude '.git' --exclude 'package/' dev:/data/users/kjs"
+alias pulla="rsync -avz dev:/data/users/kjs/datafreeway --exclude 'log*' --exclude 'target/' --exclude '.idea' --exclude '*.iml' --exclude '.git' --exclude 'package/' ~/Code"
 
 [[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"

@@ -42,15 +42,14 @@ unset MAILCHECK
 # disable core dumps
 ulimit -S -c 0
 
-# allow more open files
-ulimit -n 4096
+ulimit -n 10000
 
 umask 0027   # -rwxr-x---
 
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 PATH="/usr/local/bin:$PATH"
-test -d "$HOME/bin" &&
-PATH="$HOME/bin:$PATH"
+test -d "$HOME/Code/bin" &&
+PATH="$HOME/Code/bin:$PATH"
 export PATH
 
 case "$-" in
@@ -125,7 +124,7 @@ if [ "$UNAME" = Darwin ]; then
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
         MANPATH="/usr/pkg/share/man:$MANPATH"
     }
-    JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_08.jdk/Contents/Home"
     ANT_HOME="/Developer/Java/Ant"
     export ANT_HOME JAVA_HOME
 
@@ -162,8 +161,11 @@ source ~/.dirs
 [[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-export BINPATH=~/Code
+export BINPATH=~/Code/bin
+export CDPATH=$CDPATH:~/Code:~/Code/datafreeway/ptail
 
 [[ -t 0 ]] && stty -ixon
 
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 set -o history
+
