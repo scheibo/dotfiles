@@ -46,9 +46,9 @@ function! HighlightTooLongLines()
   endif
 endfunction
 
-augroup filetypedetect
-au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
-augroup END
+"augroup filetypedetect
+"au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
+"augroup END
 
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
@@ -113,7 +113,7 @@ set smartindent
 set nowrap
 set softtabstop=2
 set shiftwidth=2
-set tabstop=4
+set tabstop=2
 set expandtab
 set nosmarttab
 set smarttab
