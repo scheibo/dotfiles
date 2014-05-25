@@ -20,14 +20,13 @@ git_colored_branch() {
 }
 
 prompt_func() {
-  history -a # write history immediately
   if [[ $? = "0" ]]; then
     color="\[\033[1;32m\]"
   else
     color="\[\033[1;31m\]"
   fi
 
-  if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
+  if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]] && [[ "$(command git rev-parse --show-toplevel)" != "$NOTE" ]]; then
     PS1="\[\e[32;1m\]$color\u@\h\[\033[1;30m\]($(git_colored_branch)\[\033[1;30m\])$color$\[\e[0m\] "
   else
     PS1="\[\e[32;1m\]$color\u@\h$\[\e[37;0m\] "

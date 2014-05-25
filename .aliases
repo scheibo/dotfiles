@@ -146,9 +146,12 @@ alias bin='cd $(git rev-parse --show-toplevel)/bin'
 alias spec='cd $(git rev-parse --show-toplevel)/spec'
 
 alias rbvalgrind='valgrind --partial-loads-ok=yes --undef-value-errors=no --num-callers=50 --error-limit=no ruby'
+alias vg='valgrind --leak-check=full'
 alias rbgdb='gdb --args ruby'
 
 alias tmux="TERM=screen-256color-bce tmux"
 alias vim="vim -O"
+
+alias randman='dir="/bin"; man $(ls $dir |sed -n "$(echo $(( $RANDOM % $(ls $dir |wc -l | awk "{ print $1; }" ) + 1 )) )p")'
 
 [[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"

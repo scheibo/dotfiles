@@ -47,10 +47,19 @@ ulimit -n 4096
 
 umask 0027   # -rwxr-x---
 
+export GOPATH="$HOME/Code/src/go"
+
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+PATH="$PATH:/usr/local/Cellar/smlnj/110.75/libexec/bin"
 PATH="/usr/local/bin:$PATH"
+PATH="/usr/local/heroku/bin:$PATH"
 test -d "$HOME/bin" &&
 PATH="$HOME/bin:$PATH"
+test -d "$HOME/Library/Haskell/bin" &&
+PATH="$HOME/Library/Haskell/bin:$PATH"
+PATH="$PATH:$GOPATH/bin"
+PATH=$PATH:/usr/local/mysql/bin
+PATH=/usr/local/share/python:$PATH
 export PATH
 
 case "$-" in
@@ -78,7 +87,7 @@ HISTCONTROL=ignoreboth
 
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
-export HISTIGNORE='&:lal:lsl:l:c:clear::cd:..:la:ls:ll:exit:x:[bf]g:history:h:su:make'
+export HISTIGNORE='&:lal:lsl:l:c:clear::cd:..:la:ls:ll:exit:x:[bf]g:history:h:su'
 
 HAVE_VIM=$(command -v vim)
 HAVE_GVIM=$(command -v gvim)
@@ -166,5 +175,7 @@ export CC=gcc-4.2
 export BINPATH=~/Code
 
 [[ -t 0 ]] && stty -ixon
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 set -o history

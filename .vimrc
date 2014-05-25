@@ -46,9 +46,9 @@ function! HighlightTooLongLines()
   endif
 endfunction
 
-augroup filetypedetect
-au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
-augroup END
+"augroup filetypedetect
+"au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
+"augroup END
 
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
 
@@ -114,7 +114,7 @@ set smartindent
 set nowrap
 set softtabstop=2
 set shiftwidth=2
-set tabstop=4
+set tabstop=2
 set expandtab
 set nosmarttab
 set smarttab
@@ -324,6 +324,18 @@ let g:fuf_file_exclude='\v\~$|\.(o|exe|dll|bak|sw[po])$|(^|[/\\])(\.(hg|git|bzr)
 
 let g:NumberToggleTrigger="<C-x>"
 
+let g:SuperTabLongestEnhanced=1
+
 nnoremap <C-t> :set nopaste<cr>:FufFile **/<cr>
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
+
+" GOODBYE ARROW KEYS!
+"noremap  <Up> ""
+"noremap! <Up> <Esc>
+"noremap  <Down> ""
+"noremap! <Down> <Esc>
+"noremap  <Left> ""
+"noremap! <Left> <Esc>
+"noremap  <Right> ""
+"noremap! <Right> <Esc>
