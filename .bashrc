@@ -142,7 +142,8 @@ if [ "$UNAME" = Darwin ]; then
     JRUBY_HOME="/opt/jruby"
     export JRUBY_HOME
 
-    export NODE_PATH=/usr/local/lib/node
+    #export NODE_PATH=/usr/local/lib/node
+    export NODE_PATH="$NODE_PATH:/usr/local/lib/node_modules"
 else # Linux
   if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
       startx
