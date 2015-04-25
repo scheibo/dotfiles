@@ -50,6 +50,7 @@ umask 0027   # -rwxr-x---
 export GOPATH="$HOME/Code/src/go"
 
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+PATH="$PATH:/Applications/Postgres.app/Contents/Versions/9.4/bin"
 PATH="$PATH:/usr/local/Cellar/smlnj/110.75/libexec/bin"
 PATH="/usr/local/bin:$PATH"
 PATH="/usr/local/heroku/bin:$PATH"
@@ -134,7 +135,8 @@ if [ "$UNAME" = Darwin ]; then
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
         MANPATH="/usr/pkg/share/man:$MANPATH"
     }
-    JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+    #JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+    JAVA_HOME="/Library/Java/Home"
     ANT_HOME="/Developer/Java/Ant"
     export ANT_HOME JAVA_HOME
 
