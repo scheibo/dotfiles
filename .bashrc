@@ -125,7 +125,8 @@ if [ "$UNAME" = Darwin ]; then
         PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
         MANPATH="/usr/pkg/share/man:$MANPATH"
     }
-    JAVA_HOME="/System/Library/Frameworks/JavaVM.framework/Home"
+    # /usr/libexec/java_home -v 1.7
+    JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_76.jdk/Contents/Home"
     ANT_HOME="/Developer/Java/Ant"
     export ANT_HOME JAVA_HOME
 
@@ -142,10 +143,16 @@ fi
 
 [[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
 
+export GRADLE_HOME=/Users/kjs/Code/bin/gradle
+export PATH="$PATH:$GRADLE_HOME/bin:$HOME/Code/bin/maven/bin"
+
 puniq () {
     echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
     cut -f 2- |tr '\n' : |sed -e 's/:$//' -e 's/^://'
 }
+
+source $HOME/.bagpipe/setup.sh $HOME/.bagpipe scheibo.mtv.corp.google.com
+export PATH=$HOME/bin:$PATH
 
 # condense PATH entries
 PATH=$(puniq $PATH)
@@ -165,5 +172,9 @@ source ~/.dirs
 export BINPATH=~/Code
 
 [[ -t 0 ]] && stty -ixon
+
+export P4CONFIG=.p4config
+export P4EDITOR=$EDITOR
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
 set -o history
