@@ -1,7 +1,5 @@
 #!/bin/bash
 
-LS_COMMON="-hBG"
-
 dircolors="$(type -P gdircolors dircolors | head -1)"
 test -n "$dircolors" && {
     COLORS=/etc/DIR_COLORS
@@ -12,6 +10,7 @@ test -n "$dircolors" && {
 }
 unset dircolors
 
+LS_COMMON="-hBG"
 test -n "$LS_COMMON" &&
 alias ls="command ls $LS_COMMON"
 

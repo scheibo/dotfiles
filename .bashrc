@@ -43,15 +43,10 @@ unset MAILCHECK
 ulimit -S -c 0
 
 # allow more open files
-ulimit -n 4096
+ulimit -n 32768
 
-umask 0027   # -rwxr-x---
-
-PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
-PATH="/usr/local/bin:$PATH"
-test -d "$HOME/bin" &&
-PATH="$HOME/bin:$PATH"
-export PATH
+# -rwxr-x---
+umask 0027
 
 case "$-" in
     *i*) INTERACTIVE=yes ;;
@@ -81,7 +76,6 @@ export HISTFILESIZE=1000000
 export HISTIGNORE='&:lal:lsl:l:c:clear::cd:..:la:ls:ll:exit:x:[bf]g:history:h:su:make'
 
 HAVE_VIM=$(command -v vim)
-HAVE_GVIM=$(command -v gvim)
 
 test -n "$HAVE_VIM" &&
 EDITOR=vim ||
@@ -96,10 +90,8 @@ else
     MANPAGER="$PAGER"
 fi
 export PAGER MANPAGER
-
 ACK_PAGER="$PAGER"
 
-[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 
 if [ "$UNAME" = Darwin ]; then
     # enable programmable completion features
@@ -111,52 +103,31 @@ if [ "$UNAME" = Darwin ]; then
     export CLICOLOR=1
     export LSCOLORS=ExFxCxDxBxegedabagacad
 
-    export GEMEDITOR=mate
-
-    # put ports on the paths if /opt/local exists
-    test -x /opt/local -a ! -L /opt/local && {
-        PORTS=/opt/local
-        PATH="$PORTS/bin:$PORTS/sbin:$PATH"
-        MANPATH="$PORTS/share/man:$MANPATH"
-        alias port="sudo nice -n +18 $PORTS/bin/port"
-    }
-
-    test -x /usr/pkg -a ! -L /usr/pkg && {
-        PATH="/usr/pkg/sbin:/usr/pkg/bin:$PATH"
-        MANPATH="/usr/pkg/share/man:$MANPATH"
-    }
     # /usr/libexec/java_home -v 1.7
     JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_76.jdk/Contents/Home"
-    ANT_HOME="/Developer/Java/Ant"
-    export ANT_HOME JAVA_HOME
-
-    test -d /opt/jruby &&
-    JRUBY_HOME="/opt/jruby"
-    export JRUBY_HOME
-
-    export NODE_PATH=/usr/local/lib/node
-else # Linux
-  if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
-      startx
-  fi
+#else # Linux
+  #if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
+      #startx
+  #fi
 fi
 
+[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 [[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
+[[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
 
-export GRADLE_HOME=/Users/kjs/Code/bin/gradle
-export PATH="$PATH:$GRADLE_HOME/bin:$HOME/Code/bin/maven/bin"
+PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+PATH="/usr/local/bin:$PATH"
+PATH="$HOME/bin:$PATH"
+export PATH
 
 puniq () {
     echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
     cut -f 2- |tr '\n' : |sed -e 's/:$//' -e 's/^://'
 }
 
-source $HOME/.bagpipe/setup.sh $HOME/.bagpipe scheibo.mtv.corp.google.com
-export PATH=$HOME/bin:$PATH
-
 # condense PATH entries
-PATH=$(puniq $PATH)
-MANPATH=$(puniq $MANPATH)
+export PATH=$(puniq $PATH)
+export MANPATH=$(puniq $MANPATH)
 
 # set up directory bookmarking (cdable_vars needs to be enabled)
 [[ ! -f ~/.dirs ]] && touch ~/.dirs
@@ -166,15 +137,9 @@ save (){
 }
 source ~/.dirs
 
-[[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
+
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
-export BINPATH=~/Code
-
 [[ -t 0 ]] && stty -ixon
-
-export P4CONFIG=.p4config
-export P4EDITOR=$EDITOR
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 
 set -o history
