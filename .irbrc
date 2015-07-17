@@ -5,11 +5,8 @@ require 'rubygems'
 require 'irb/completion'
 require 'irb/ext/save-history'
 require 'pp'
-#require 'hirb'
 require 'yaml'
-
 require 'open-uri'
-require 'nokogiri'
 
 IRB.conf[:SAVE_HISTORY] = 500
 IRB.conf[:HISTORY_FILE] = File.expand_path('~/.irb_history')
@@ -45,5 +42,3 @@ end
 def r
   reload!
 end
-
-#Hirb::View.enable
