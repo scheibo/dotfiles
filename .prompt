@@ -20,7 +20,6 @@ git_colored_branch() {
 }
 
 prompt_func() {
-  history -a # write history immediately
   if [[ $? = "0" ]]; then
     color="\[\033[1;32m\]"
   else
@@ -35,3 +34,5 @@ prompt_func() {
 }
 
 PROMPT_COMMAND=prompt_func
+# Save and reload the history after each command finishes
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
