@@ -1,3 +1,26 @@
+" ===========================================================================
+" .vimrc
+" ===========================================================================
+
+let s:darwin = has('mac')
+let s:ag     = executable('ag')
+
+" ---------------------------------------------------------------------------
+" Plugins
+" ---------------------------------------------------------------------------
+
+silent! if plug#begin('~/.vim/plugged')
+
+" YCM replaces supertab
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer' }
+Plug 'scrooloose/nerdcommenter', { 'on': 'NERDCommenterToggle' }
+Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+
+call plug#end()
+endif
+
 " ---------------------------------------------------------------------------
 " General
 " ---------------------------------------------------------------------------
@@ -26,7 +49,6 @@ set splitbelow
 set showmode
 set lcs=tab:»·   " show tabs
 set lcs+=trail:· " show trailing spaces
-
 set notitle
 
 " ---------------------------------------------------------------------------
@@ -46,23 +68,11 @@ function! HighlightTooLongLines()
   endif
 endfunction
 
-"augroup filetypedetect
-"au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
-"augroup END
+augroup filetypedetect
+au WinEnter,BufNewFile,BufRead * call HighlightTooLongLines()
+augroup END
 
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
-
-" ---------------------------------------------------------------------------
-" Completion
-" ---------------------------------------------------------------------------
-
-set ofu=syntaxcomplete#Complete
-
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
 
 " ----------------------------------------------------------------------------
 "  Backups
@@ -124,8 +134,9 @@ set virtualedit=block
 "  Mappings
 " ----------------------------------------------------------------------------
 
-" remap <LEADER> to ',' (instead of '\')
-let mapleader = ","
+" remap <LEADER> to ' ' (instead of '\')
+let mapleader      = ' '
+let maplocalleader = ' '
 
 " emacs movement keybindings in insert mode
 imap <C-a> <C-o>0
@@ -320,9 +331,10 @@ imap <C-s> <ESC><C-s>
 " can't map <C-/>, however, '/' sends an '_' so we can be sneaky
 map <C-_> <plug>NERDCommenterToggle<CR>
 
-let g:fuf_dirs_exclude='\v(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
-let g:fuf_file_exclude='\v\~$|\.(o|exe|dll|bak|sw[po])$|(^|[/\\])(\.(hg|git|bzr))($|[/\\])'
-
 nnoremap <C-t> :set nopaste<cr>:FufFile **/<cr>
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
+
+" TODO(kjs): ctags
+" set tags=./tags;/
+
