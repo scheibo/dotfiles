@@ -11,7 +11,7 @@ test -r /etc/bashrc && source /etc/bashrc
 set -o notify
 set -o emacs
 set -o physical
-set -o ignoreeof # Ctrl+D doesn't exist
+set -o ignoreeof # turn off Ctrl+D
 
 # http://ss64.com/bash/shopt.html
 shopt -s cdable_vars >/dev/null 2>&1
@@ -67,7 +67,6 @@ export LANG LANGUAGE LC_CTYPE LC_ALL
 : ${FTP_PASSIVE:=1}
 export FTP_PASSIVE
 
-# ignore backups, CVS directories, python bytecode, vim swap files
 FIGNORE="~:CVS:#:.pyc:.swp:.swa:apache-solr-*"
 HISTCONTROL=ignoreboth
 
@@ -92,7 +91,6 @@ fi
 export PAGER MANPAGER
 ACK_PAGER="$PAGER"
 
-
 if [ "$UNAME" = Darwin ]; then
     # enable programmable completion features
     if [ -f `brew --prefix`/etc/bash_completion ]; then
@@ -105,30 +103,11 @@ if [ "$UNAME" = Darwin ]; then
 
     # /usr/libexec/java_home -v 1.7
     JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_76.jdk/Contents/Home"
-#else # Linux
+else # Linux
   #if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
       #startx
   #fi
 fi
-
-[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
-[[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
-[[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
-[[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"
-
-PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
-PATH="/usr/local/bin:$PATH"
-PATH="$HOME/bin:$PATH"
-export PATH
-
-puniq () {
-    echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
-    cut -f 2- |tr '\n' : |sed -e 's/:$//' -e 's/^://'
-}
-
-# condense PATH entries
-export PATH=$(puniq $PATH)
-export MANPATH=$(puniq $MANPATH)
 
 # set up directory bookmarking (cdable_vars needs to be enabled)
 [[ ! -f ~/.dirs ]] && touch ~/.dirs
@@ -138,6 +117,23 @@ save (){
 }
 source ~/.dirs
 
+PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+PATH="/usr/local/bin:$PATH"
+PATH="$HOME/bin:$PATH"
+
+[[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
+[[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
+[[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
+[[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"
+
+puniq () {
+    echo "$1" |tr : '\n' |nl |sort -u -k 2,2 |sort -n |
+    cut -f 2- |tr '\n' : |sed -e 's/:$//' -e 's/^://'
+}
+
+# condense PATH entries
+export PATH=$(puniq $PATH)
+export MANPATH=$(puniq $MANPATH)
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
