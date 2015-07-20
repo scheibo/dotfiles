@@ -10,6 +10,8 @@ alias git-ammend='git-amend'
 alias gamend='git-amend'
 alias gammend='git-amend'
 
+alias grm='git rm'
+
 # NOTE: these should match ~/.gitconfig
 alias ga='git add'
 alias gs='git status'

@@ -114,6 +114,7 @@ fi
 [[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 [[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
 [[ -s "$HOME/.aliases" ]] && source "$HOME/.aliases"
+[[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"
 
 PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
 PATH="/usr/local/bin:$PATH"

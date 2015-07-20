@@ -10,10 +10,6 @@ test -n "$dircolors" && {
 }
 unset dircolors
 
-LS_COMMON="-hBG"
-test -n "$LS_COMMON" &&
-alias ls="command ls $LS_COMMON"
-
 push_ssh_cert() {
     local _host
     test -f ~/.ssh/id_rsa.pub || ssh-keygen -t rsa
@@ -45,34 +41,14 @@ extract() {
      fi
 }
 
+# GPG helpers
 encrypt() { gpg -ao cipher.asc -esr $2 $1; }
 decrypt() { gpg -o plain.txt -d $1; }
 
+# Traversal tools
 cdir() { mkdir $1 && cd $1; }
-
-goto() { [[ -d "$1" ]] && cd "$1" || cd "$(dirname "$1")"; }
 cpf() { cp "$@" && goto "$_"; }
 mvf() { mv "$@" && goto "$_"; }
-
-gg() {
-    if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
-        git grep "$*"
-    else
-        grep --exclude="\.hg" --exclude="vendor" -R -e "$*" .
-    fi
-}
-ggl() {
-    if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
-        git grep -l "$*"
-    else
-        grep --exclude="\.hg" --exclude="vendor" -R -e -l "$*" .
-    fi
-}
-hh() { file=$(ggl $* | menu); vim -c "/${*}" $file; }
-vu() { vim -c ":G $*"; }
-
-ff() { find . -regex ".*/${*}[^/]*"; }
-dd() { file=$(ff $* | menu); vim $file; }
 
 # enable color support of ls and also add handy aliases
 if [ -x /bin/dircolors ]; then
@@ -86,6 +62,11 @@ if [ -x /bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 
+LS_COMMON="-hBG"
+test -n "$LS_COMMON" &&
+alias ls="command ls $LS_COMMON"
+
+# `ls` conveniences
 alias ll='ls -l'
 alias la='ls -A'
 alias l='ls -CF'
@@ -94,26 +75,7 @@ alias lla='ls -l -A'
 alias lsl='ls -l'
 alias lsa='ls -A'
 
-alias sd='sudo shutdown -h now'
-alias gcc99='gcc -std=c99 -O -Wall'
-alias crun='valgrind --leak-check=yes ./a.out'
-alias g='git'
-
-alias pacman='sudo pacman'
-alias pinstall='sudo pacman -S'
-alias puninstall='sudo pacman -R'
-alias psearch='pacman -Ss'
-
-alias xs='cd'
-alias vf='cd'
-alias cd..='cd ..'
-alias unmount='umount'
-alias kk='ll'
-alias ks='ls'
-alias LS='ls'
-alias sl='ls'
-alias cs='cd'
-
+# `cd` conveniences
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
@@ -121,33 +83,30 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 alias dc='cd -'
 
-alias mkdir='mkdir -p'
-alias clean='rm -rf compiled \#* *~ .*~ *.bak .*.bak *.tmp .*.tmp core a.out *.gch *.hi'
-alias wipe='rm -rf compiled \#* *~ .*~ *.bak .*.bak *.o *.d *.tmp .*.tmp core *.out* *.gch *.hi'
-alias texclean='rm -f *.toc *.aux *.log *.cp *.fn *.tp *.vr *.pg *.ky'
+# Typos
+alias xs='cd'
+alias vf='cd'
+alias cs='cd'
+alias cd..='cd ..'
+alias unmount='umount'
+alias LS='ls'
+alias sl='ls'
+
+# Short forms
 alias h='history'
 alias c='clear'
-alias hc='history -c'
-alias du1='du -h --max-depth=1'
-alias fn='find . -name'
+alias g='git'
 
-alias irb='irb --prompt simple'
+# Miscellaneous
+alias vim="vim -O"
 alias vi='command vim'
-
+alias tmux="TERM=screen-256color-bce tmux"
+alias root='cd $(git rev-parse --show-toplevel)'
 alias wget='wget --no-check-certificate'
 alias sbashrc='source ~/.bashrc'
 alias ps2pdf='ps2pdf -sPAPERSIZE=a4 -dOptimize=true -dEmbedAllFonts=true'
-
-alias root='cd $(git rev-parse --show-toplevel)'
-alias lib='cd $(git rev-parse --show-toplevel)/lib/$(basename $(git rev-parse --show-toplevel))'
-alias ext='cd $(git rev-parse --show-toplevel)/ext/'
-alias bin='cd $(git rev-parse --show-toplevel)/bin'
-alias spec='cd $(git rev-parse --show-toplevel)/spec'
-
-alias rbvalgrind='valgrind --partial-loads-ok=yes --undef-value-errors=no --num-callers=50 --error-limit=no ruby'
-alias rbgdb='gdb --args ruby'
-
-alias tmux="TERM=screen-256color-bce tmux"
-alias vim="vim -O"
-
-[[ -s "$HOME/.git-aliases" ]] && source "$HOME/.git-aliases"
+alias irb='irb --prompt simple'
+alias mkdir='mkdir -p'
+alias hc='history -c'
+alias gcc99='gcc -std=c99 -O -Wall'
+alias crun='valgrind --leak-check=yes ./a.out'
