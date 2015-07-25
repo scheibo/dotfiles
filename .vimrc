@@ -12,14 +12,22 @@ let s:ag     = executable('ag')
 silent! if plug#begin('~/.vim/plugged')
 
 " YCM replaces supertab
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer' }
-Plug 'scrooloose/nerdcommenter', { 'on': 'NERDCommenterToggle' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer --gocode-completer' }
+"Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
+Plug 'scrooloose/nerdcommenter'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
-Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
 
 call plug#end()
 endif
+
+" ---------------------------------------------------------------------------
+" Plugin Bindings
+" ---------------------------------------------------------------------------
+
+let g:UltiSnipsExpandTrigger="<c-j>"
+" can't map <C-/>, however, '/' sends an '_' so we can be sneaky
+map <C-_> <plug>NERDCommenterToggle<CR>
 
 " ---------------------------------------------------------------------------
 " General
@@ -327,11 +335,6 @@ vnoremap <BS> d
 noremap <C-s>  :update<CR>
 vnoremap <C-s> <C-c>:update<CR>
 imap <C-s> <ESC><C-s>
-
-" can't map <C-/>, however, '/' sends an '_' so we can be sneaky
-map <C-_> <plug>NERDCommenterToggle<CR>
-
-nnoremap <C-t> :set nopaste<cr>:FufFile **/<cr>
 
 command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw!'
 

@@ -48,3 +48,6 @@
   soft = reset --soft
   all = !git-all
   amend = !git-amend
+[user]
+  email = kjs@google.com
+  name = Kirk Scheibelhut

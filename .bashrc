@@ -103,11 +103,11 @@ if [ "$UNAME" = Darwin ]; then
 
     # /usr/libexec/java_home -v 1.7
     JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.7.0_76.jdk/Contents/Home"
-else # Linux
+fi #else # Linux
   #if [[ -z "$DISPLAY" ]] && [[ $(tty) = /dev/tty1 ]]; then
       #startx
   #fi
-fi
+#fi
 
 # set up directory bookmarking (cdable_vars needs to be enabled)
 [[ ! -f ~/.dirs ]] && touch ~/.dirs
@@ -136,6 +136,7 @@ export PATH=$(puniq $PATH)
 export MANPATH=$(puniq $MANPATH)
 
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+[[ -s "$HOME/.fzf.bash" ]] && source "$HOME/.fzf.bash"
 
 [[ -t 0 ]] && stty -ixon
 

@@ -1,15 +1,5 @@
 #!/bin/bash
 
-dircolors="$(type -P gdircolors dircolors | head -1)"
-test -n "$dircolors" && {
-    COLORS=/etc/DIR_COLORS
-    test -e "/etc/DIR_COLORS.$TERM"   && COLORS="/etc/DIR_COLORS.$TERM"
-    test -e "$HOME/.dircolors"        && COLORS="$HOME/.dircolors"
-    test ! -e "$COLORS"               && COLORS=
-    eval `$dircolors --sh $COLORS`
-}
-unset dircolors
-
 push_ssh_cert() {
     local _host
     test -f ~/.ssh/id_rsa.pub || ssh-keygen -t rsa
@@ -50,19 +40,13 @@ cdir() { mkdir $1 && cd $1; }
 cpf() { cp "$@" && goto "$_"; }
 mvf() { mv "$@" && goto "$_"; }
 
-# enable color support of ls and also add handy aliases
-if [ -x /bin/dircolors ]; then
-#   eval "`dircolors -b`"
-    alias ls='ls --color=auto'
-    alias dir='dir --color=auto'
-    alias vdir='vdir --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-LS_COMMON="-hBG"
+LS_COMMON="-hBG --color=auto"
 test -n "$LS_COMMON" &&
 alias ls="command ls $LS_COMMON"
 
@@ -86,7 +70,6 @@ alias dc='cd -'
 # Typos
 alias xs='cd'
 alias vf='cd'
-alias cs='cd'
 alias cd..='cd ..'
 alias unmount='umount'
 alias LS='ls'
@@ -97,9 +80,24 @@ alias h='history'
 alias c='clear'
 alias g='git'
 
-# Miscellaneous
-alias vim="vim -O"
+# vim hacks
+vim_wrapper() {
+    if [ "$#" -eq 1 ]; then
+        file=$(echo $1 | perl -ne '/([^:]*):([^:]*):?/; print "$1\n";')
+        num=$(echo $1 | perl -ne '/([^:]*):([^:]*):?/; print "$2\n";')
+        if [ -z "$file" ] || [ -z "$num" ]; then
+            command vim $1
+        else
+            command vim "$file" "+${num}"
+        fi
+    else
+        command vim -O $*
+    fi
+}
+alias vim='vim_wrapper'
 alias vi='command vim'
+
+# Miscellaneous
 alias tmux="TERM=screen-256color-bce tmux"
 alias root='cd $(git rev-parse --show-toplevel)'
 alias wget='wget --no-check-certificate'

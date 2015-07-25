@@ -11,6 +11,7 @@ alias gamend='git-amend'
 alias gammend='git-amend'
 
 alias grm='git rm'
+alias gap='git add --patch'
 
 # NOTE: these should match ~/.gitconfig
 alias ga='git add'
