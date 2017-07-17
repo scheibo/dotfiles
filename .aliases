@@ -108,3 +108,6 @@ alias mkdir='mkdir -p'
 alias hc='history -c'
 alias gcc99='gcc -std=c99 -O -Wall'
 alias crun='valgrind --leak-check=yes ./a.out'
+
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
