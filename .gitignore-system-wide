@@ -32,3 +32,5 @@ dwsync.xml
 .svn
 publish
 .idea
+
+*.vimrc

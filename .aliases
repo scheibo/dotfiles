@@ -31,6 +31,23 @@ extract() {
      fi
 }
 
+refresh() {
+    for dir in $(ls); do
+        if [ -d "${dir}/.git" ]; then
+            echo "$dir"
+            cd ${dir}
+            if [ -n "$(git remote)" ]; then
+                (test -z "$(git status -s)" && git pull origin master && git push origin master) || return 1
+            fi
+            cd -
+        fi
+    done
+}
+
+npm() {
+    command npm $* 2>/dev/null
+}
+
 # GPG helpers
 encrypt() { gpg -ao cipher.asc -esr $2 $1; }
 decrypt() { gpg -o plain.txt -d $1; }
@@ -111,3 +128,5 @@ alias crun='valgrind --leak-check=yes ./a.out'
 
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
+
+alias xcalc='xargs calc'

@@ -6,7 +6,7 @@ git_branch() {
 
 git_colored_branch() {
   st="$(command git status 2>/dev/null)"
-  if [[ "$st" =~  "working directory clean" ]]; then
+  if [[ "$st" =~  "working tree clean" ]]; then
     echo "\[\033[0;37m\]$(git_branch)\[\e[0m\]"
   elif [[ "$st" =~  "Changes to be committed" ]]; then
     echo "\[\033[0;33m\]$(git_branch)\[\e[0m\]"
@@ -20,11 +20,15 @@ git_colored_branch() {
 }
 
 prompt_func() {
-  if [[ $? = "0" ]]; then
+  if [[ $? = 0 ]]; then
     color="\[\033[1;32m\]"
   else
     color="\[\033[1;31m\]"
   fi
+
+  echo -en "\e]0;$(pwd)\a"
+  # Save and reload the history after each command finishes
+  history -a; history -c; history -r; 
 
   if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
     PS1="\[\e[32;1m\]$color\u@\h\[\033[1;30m\]($(git_colored_branch)\[\033[1;30m\])$color$\[\e[0m\] "
@@ -33,6 +37,4 @@ prompt_func() {
   fi
 }
 
-PROMPT_COMMAND=prompt_func
-# Save and reload the history after each command finishes
-export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND=prompt_func

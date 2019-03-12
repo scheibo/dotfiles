@@ -25,6 +25,7 @@
   whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
 	editor = /usr/bin/vim
 	commentchar = $
+	excludesfile = /usr/local/google/home/kjs/.gitignore-system-wide
 [alias]
   a = add
   s = status

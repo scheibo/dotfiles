@@ -9,14 +9,19 @@ let s:ag     = executable('ag')
 " Plugins
 " ---------------------------------------------------------------------------
 
+"source /usr/share/vim/google/google.vim
+"Glug ft-python
+"Glug ft-javascript
+
 silent! if plug#begin('~/.vim/plugged')
 
 " YCM replaces supertab
-Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer --gocode-completer' }
+"Plug 'Valloric/YouCompleteMe', { 'do': './install.sh --gocode-completer --clang-completer --gocode-completer' }
 "Plug 'nsf/gocode', { 'for': 'go', 'rtp': 'vim', 'do': '~/.vim/plugged/gocode/vim/symlink.sh' }
 Plug 'scrooloose/nerdcommenter'
-Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+"Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': 'yes \| ./install' }
+Plug 'leafgarland/typescript-vim'
 
 call plug#end()
 endif
@@ -55,9 +60,10 @@ set novisualbell
 set splitright
 set splitbelow
 set showmode
-set lcs=tab:»·   " show tabs
-set lcs+=trail:· " show trailing spaces
+"set lcs=tab:»·   " show tabs
+"set lcs+=trail:· " show trailing spaces
 set notitle
+set t_BE=
 
 " ---------------------------------------------------------------------------
 " Colors / Theme
@@ -236,7 +242,7 @@ au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") |
 au FileType javascript setlocal nocindent
 
 " strip whitespace on save
-au BufWritePre * :%s/\s\+$//e
+"au BufWritePre * :%s/\s\+$//e
 
 function ModeChange()
   if getline(1) =~ "^#!.*/bin/*"
@@ -277,9 +283,10 @@ au BufRead,BufNewFile *.ronn       set ft=mkd tw=80 ts=2 sw=2 expandtab
 
 au Filetype gitcommit set tw=68  spell
 au Filetype ruby      set tw=80  ts=2
+au Filetype go        set tw=80  ts=2
 
 " make python follow PEP8 ( http://www.python.org/dev/peps/pep-0008/ )
-au FileType python    set tw=79 ts=4 sw=4 expandtab
+"au FileType python    set tw=79 ts=4 sw=4 expandtab
 
 " for school
 " au FileType c set tw=80 ts=2 sw=2 noexpandtab
@@ -299,6 +306,7 @@ let g:hs_highlight_types = 1
 let g:hs_highlight_more_types = 1
 let g:hs_highlight_debug = 1
 let g:ruby_operators = 1
+let g:javascript_plugin_jsdoc = 1
 
 " -----------------------------------------------------------
 " Highlight
@@ -324,6 +332,11 @@ hi link javaScriptIdentifier Keyword
 hi link javaScriptNull Constant
 hi link javaScriptFunction Keyword
 hi link javaScript Normal
+hi link javascriptTemplate String
+hi link javascriptTemplateSubstitution Label
+hi link javaScriptTemplateDelim String
+hi link javaScriptTemplateVar Label
+hi link javaScriptTemplateString String
 
 " ---------------------------------------------------------------------------
 " Misc
@@ -341,3 +354,5 @@ command! -nargs=+ G execute 'silent grep! -R <args> .' | copen | execute 'redraw
 " TODO(kjs): ctags
 " set tags=./tags;/
 
+set exrc
+set secure

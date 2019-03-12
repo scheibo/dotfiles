@@ -25,11 +25,11 @@ terminfo rxvt* 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
 hardstatus on
 hardstatus message 'screen: %-Lw(%n*%f %t)%+Lw'
 
-screen -t server 1 bash
-screen -t git-sh 2 bash
-screen -t console 3 bash
-screen -t term 4 bash
-select 2
+#screen -t server 1 bash
+#screen -t git-sh 2 bash
+#screen -t console 3 bash
+#screen -t term 4 bash
+#select 2
 
 # keybinding
 

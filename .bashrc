@@ -72,7 +72,7 @@ HISTCONTROL=ignoreboth
 
 export HISTSIZE=1000000
 export HISTFILESIZE=1000000
-export HISTIGNORE='&:lal:lsl:l:c:clear::cd:..:la:ls:ll:exit:x:[bf]g:history:h:su:make'
+export HISTIGNORE='&:lal:lsl:l:c:clear::cd:..:la:ls:ll:exit:x:[bf]g:history:h:su:make:add_dep'
 
 HAVE_VIM=$(command -v vim)
 
@@ -117,9 +117,11 @@ save (){
 }
 source ~/.dirs
 
-PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin"
+PATH="$PATH:/usr/local/sbin:/usr/sbin:/sbin:$HOME/.local/bin"
 PATH="/usr/local/bin:$PATH"
 PATH="$HOME/bin:$PATH"
+PATH="$HOME/intellij/bin:$HOME/maven/bin:$PATH"
+PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$HOME/.npm-global/bin:$PATH"
 
 [[ -s "$HOME/.prompt" ]] && source "$HOME/.prompt"
 [[ -s "$HOME/.shenv" ]] && source "$HOME/.shenv"
@@ -141,3 +143,4 @@ export MANPATH=$(puniq $MANPATH)
 [[ -t 0 ]] && stty -ixon
 
 set -o history
+
