@@ -1,0 +1,51 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+\#*
+.\#*
+
+# OS or Editor folders
+.DS_Store
+.cache
+.tmproj
+.vscode
+tmtags
+.project
+.settings
+nbproject
+[Tt]humbs.db
+.favorites.json
+tags
+
+# Folders to ignore
+.hg
+.svn
+.idea
+.vscode
+
+# Python
+.pyc
+
+# Javascript
+*npm-debug.log
+*package-lock.json
+.eslintcache
+.tsbuildinfo
+.parcel-cache
+coverage
+node_modules
+
+# Zig
+zig-cache
+zig-out
+docgen_temp
+
+# C
+*.o

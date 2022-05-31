@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# git-all
+alias git-all='git add -A'
+alias gall='git-all'
+
+# git-amend
+alias git-amend='git commit --amend -C HEAD'
+alias git-ammend='git-amend'
+alias gamend='git-amend'
+alias gammend='git-amend'
+
+alias grm='git rm'
+alias gap='git add --patch'
+
+# NOTE: these should match ~/.gitconfig
+alias ga='git add'
+alias gs='git status'
+alias gb='git branch'
+alias gbr='git branch'
+alias gcm='git commit -m'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gd='git diff'
+alias gdf='git diff'
+alias gds='git diff --stat'
+alias gdc='git diff --cached'
+alias gdcs='git diff --cached --stat'
+alias gf='git fetch --prune'
+alias gk='git cherry-pick'
+alias gp='git push'
+alias gpm='git pull'
+alias gpr='git pull --rebase'
+alias hard='git reset --hard'
+alias soft='git reset --soft'

@@ -1,0 +1,39 @@
+#!/bin/bash
+
+git_branch() {
+  echo $(command git symbolic-ref HEAD 2>/dev/null | awk -F/ {'print $NF'})
+}
+
+git_colored_branch() {
+  st="$(command git status 2>/dev/null)"
+  if [[ "$st" =~  "working directory clean" ]]; then
+    echo "\[\033[0;37m\]$(git_branch)\[\e[0m\]"
+  elif [[ "$st" =~  "Changes to be committed" ]]; then
+    echo "\[\033[0;33m\]$(git_branch)\[\e[0m\]"
+  elif [[ "$st" =~  "Changes not staged" ]] || [[ "$st" =~  "Changed but not updated" ]]; then
+    echo "\[\033[0;32m\]$(git_branch)\[\e[0m\]"
+  elif [[ "$st" =~  "Untracked files" ]]; then
+    echo "\[\033[0;36m\]$(git_branch)\[\e[0m\]"
+  else
+    echo "\[\033[0;35m\]$(git_branch)\[\e[0m\]"
+  fi
+}
+
+prompt_func() {
+  if [[ $? = 0 ]]; then
+    color="\[\033[1;32m\]"
+  else
+    color="\[\033[1;31m\]"
+  fi
+
+  # Save and reload the history after each command finishes
+  history -a; history -c; history -r;
+
+  if $(command git rev-parse &>/dev/null) && [[ "$(command git rev-parse --show-toplevel)" != "$HOME" ]]; then
+    PS1="\[\e[32;1m\]$color\u@scheibo\[\033[1;30m\]($(git_colored_branch)\[\033[1;30m\])$color$\[\e[0m\] "
+  else
+    PS1="\[\e[32;1m\]$color\u@scheibo$\[\e[37;0m\] "
+  fi
+}
+
+export PROMPT_COMMAND=prompt_func

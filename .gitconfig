@@ -1,0 +1,58 @@
+[color]
+  sh = auto
+  branch = auto
+  diff = auto
+  status = auto
+  ui = true
+[color "branch"]
+  current = magenta
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+  whitespace = red reverse
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+[color "sh"]
+  branch = magenta bold
+  workdir = white bold
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+  excludesfile = /Users/kjs/.gitignore-system-wide
+  autocrlf = input
+  safecrlf = false
+[alias]
+  a = add
+  s = status
+  b = branch
+  br = branch
+  c = checkout
+  co = checkout
+  cb = checkout -b
+  d = diff
+  df = diff
+  ds = diff --stat
+  dc = diff --cached
+  f = fetch --prune
+  k = cherry-pick
+  p = push
+  dcs = diff --cached --stat
+  cm = commit -m
+  pm = pull
+  pr = pull --rebase
+  hard = reset --hard
+  soft = reset --soft
+  all = !git-all
+  amend = !git-amend
+[user]
+  email = kjs@scheibo.com
+  name = Kirk Scheibelhut
+[grep]
+  lineNumber = true
+[pull]
+  rebase = true

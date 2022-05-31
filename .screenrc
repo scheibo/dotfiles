@@ -1,0 +1,45 @@
+# ~/.screenrc
+
+startup_message off
+defscrollback 30000
+autodetach on
+defutf8 on
+
+bell_msg '^G'
+altscreen on
+defbce on
+defflow off
+nonblock on
+msgwait 0
+vbell off
+
+attrcolor b ".I"
+deflogin on
+defutf8 on
+activity "active: %n (%t) [%w:%s]"
+defhstatus "screen: ^En (^Et)"
+
+hardstatus on
+hardstatus message 'screen: %-Lw(%n*%f %t)%+Lw'
+
+# keybinding
+
+bind ^k
+bind ^\
+bind W
+bind k
+bind .
+bind \\
+bind ^h
+bind h
+
+bind Q quit
+bind W windowlist
+bind K kill
+bind } history
+
+bindkey "^[Od" prev  # change window with ctrl-left
+bindkey "^[Oc" next  # change window with ctrl-right
+
+# find the nearest shell
+bind s select bash

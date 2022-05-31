@@ -1,0 +1,136 @@
+#!/bin/bash
+
+extract() {
+     if [ -f $1 ] ; then
+         case $1 in
+             *.tar.bz2)   tar xvjf $1     ;;
+             *.tar.gz)    tar xvzf $1     ;;
+             *.bz2)       bunzip2 $1      ;;
+             *.rar)       unrar x $1      ;;
+             *.gz)        gunzip $1       ;;
+             *.tar)       tar xvf $1      ;;
+             *.tbz2)      tar xvjf $1     ;;
+             *.tgz)       tar xvzf $1     ;;
+             *.zip)       unzip $1        ;;
+             *.Z)         uncompress $1   ;;
+             *.7z)        7z x $1         ;;
+             *)           echo "'$1' cannot be extracted via >extract<" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
+
+greset () {
+    git add --all && git commit -m "RESET";
+    git reset --hard HEAD^
+}
+
+# Traversal tools
+cdir() { mkdir $1 && cd $1; }
+cpf() { cp "$@" && goto "$_"; }
+mvf() { mv "$@" && goto "$_"; }
+
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+LS_COMMON="-hBG"
+test -n "$LS_COMMON" &&
+alias ls="command ls $LS_COMMON"
+
+# `ls` conveniences
+alias ll='ls -l'
+alias la='ls -A'
+alias l='ls -CF'
+alias lal='ls -l -A'
+alias lla='ls -l -A'
+alias lsl='ls -l'
+alias lsa='ls -A'
+
+# `cd` conveniences
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
+alias dc='cd -'
+
+# Typos
+alias xs='cd'
+alias vf='cd'
+alias cd..='cd ..'
+alias unmount='umount'
+alias LS='ls'
+alias sl='ls'
+
+# Short forms
+alias h='history'
+alias c='clear'
+alias g='git'
+
+# vim hacks
+vim_wrapper() {
+    if [ "$#" -eq 1 ]; then
+        file=$(echo $1 | perl -ne '/([^:]*):([^:]*):?/; print "$1\n";')
+        num=$(echo $1 | perl -ne '/([^:]*):([^:]*):?/; print "$2\n";')
+        if [ -z "$file" ] || [ -z "$num" ]; then
+            command vim $1
+        else
+            command vim "$file" "+${num}"
+        fi
+    else
+        command vim -O $*
+    fi
+}
+alias vim='vim_wrapper'
+alias vi='command vim'
+
+# Miscellaneous
+alias root='cd $(git rev-parse --show-toplevel)'
+alias wget='wget --no-check-certificate'
+alias sbashrc='source ~/.bashrc'
+alias mkdir='mkdir -p'
+
+function gg() {
+    rg --color=always --column --no-heading "$@" | perl -pe 's|(^.*?:.*?:.*?:)(.*)|./\1 \2|'
+}
+
+alias fuck="greset"
+
+alias tsc='npx tsc'
+alias tslint='npx tslint'
+alias eslint='npx eslint'
+alias jest='npx jest'
+alias mocha='npx mocha'
+alias subpkg='/Users/kjs/Code/src/github.com/scheibo/subpkg/index.js'
+alias sp='subpkg'
+
+alias build='./build'
+alias cat='bat'
+
+function bump() {
+  if [ $# -eq 0 ]; then
+    subpkg bump sim randoms dex/types dex data mods
+  else
+    subpkg bump "$@"
+  fi
+}
+
+function pinstall() {
+    for package in $(jq -r .subPackages[] package.json); do
+        (cd $package; ncu -u; command npm install)
+    done
+    ncu -u
+    command npm install
+    (cd integration; ncu -u; command npm install)
+    sp link
+}
+
+function puninstall() {
+    rm -rf node_modules
+    cat package.json | jq -r .subPackages[] | parallel -- 'rm -rf {}/node_modules'
+    rm -rf integration/node_modules
+}
